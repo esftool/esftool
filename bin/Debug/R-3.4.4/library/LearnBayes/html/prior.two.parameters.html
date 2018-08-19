@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Construct discrete uniform prior for two parameters</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for prior.two.parameters {LearnBayes}"><tr><td>prior.two.parameters {LearnBayes}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Construct discrete uniform prior for two parameters</h2>
+
+<h3>Description</h3>
+
+<p>Constructs a discrete uniform prior distribution for two parameters
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+prior.two.parameters(parameter1, parameter2)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>parameter1</code></td>
+<td>
+<p>vector of values of first parameter</p>
+</td></tr>
+<tr valign="top"><td><code>parameter2</code></td>
+<td>
+<p>vector of values of second parameter</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>matrix of uniform probabilities where the rows and columns are
+labelled with the parameter values
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jim Albert</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+prior.two.parameters(c(1,2,3,4),c(2,4,7))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>LearnBayes</em> version 2.15.1 <a href="00Index.html">Index</a>]</div>
+</body></html>

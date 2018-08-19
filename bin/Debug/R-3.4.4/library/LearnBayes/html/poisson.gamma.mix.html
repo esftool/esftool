@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Computes the posterior for Poisson sampling and a mixture of...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for poisson.gamma.mix {LearnBayes}"><tr><td>poisson.gamma.mix {LearnBayes}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Computes the posterior for Poisson sampling and a mixture of gammas prior</h2>
+
+<h3>Description</h3>
+
+<p>Computes the parameters and mixing probabilities for a Poisson sampling problem
+where the prior is a discrete mixture of gamma densities.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+poisson.gamma.mix(probs,gammapar,data)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>probs</code></td>
+<td>
+<p>vector of probabilities of the gamma components of the prior</p>
+</td></tr>
+<tr valign="top"><td><code>gammapar</code></td>
+<td>
+<p>matrix where each row contains the shape and rate parameters for a gamma component of the prior</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>list with components y, vector of counts, and t, vector of time intervals</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<table summary="R valueblock">
+<tr valign="top"><td><code>probs</code></td>
+<td>
+<p>vector of  probabilities of the gamma components of the posterior</p>
+</td></tr>
+<tr valign="top"><td><code>gammapar</code></td>
+<td>
+<p>matrix where each row contains the shape and rate parameters for a gamma component of the posterior</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Jim Albert</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+probs=c(.5, .5)
+gamma.par1=c(1,1)
+gamma.par2=c(10,2)
+gammapar=rbind(gamma.par1,gamma.par2)
+y=c(1,3,2,4,10); t=c(1,1,1,1,1)
+data=list(y=y,t=t)
+poisson.gamma.mix(probs,gammapar,data)</pre>
+
+<hr /><div style="text-align: center;">[Package <em>LearnBayes</em> version 2.15.1 <a href="00Index.html">Index</a>]</div>
+</body></html>

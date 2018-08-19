@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Posterior distribution of two parameters with discrete priors</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for discrete.bayes.2 {LearnBayes}"><tr><td>discrete.bayes.2 {LearnBayes}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Posterior distribution of two parameters with discrete priors</h2>
+
+<h3>Description</h3>
+
+<p>Computes the posterior distribution for an arbitrary two parameter distribution
+for a discrete prior
+distribution.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+discrete.bayes.2(df,prior,y=NULL,...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>df</code></td>
+<td>
+<p>name of the function defining the sampling density of
+two parameters</p>
+</td></tr>
+<tr valign="top"><td><code>prior</code></td>
+<td>
+<p>matrix defining the prior density; the row names and column names
+of the matrix define respectively the values of parameter 1 and values of
+parameter 2 and the entries of the matrix give the prior probabilities</p>
+</td></tr>
+<tr valign="top"><td><code>y</code></td>
+<td>
+<p>y is a matrix of data values, where each row corresponds to a 
+single observation</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>any further fixed parameter values 
+used in the sampling density function</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<table summary="R valueblock">
+<tr valign="top"><td><code>prob</code></td>
+<td>
+<p>matrix of posterior probabilities</p>
+</td></tr>
+<tr valign="top"><td><code>pred</code></td>
+<td>
+<p>scalar with prior predictive probability</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Jim Albert</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+p1 = seq(0.1, 0.9, length = 9)
+p2 = p1
+prior = matrix(1/81, 9, 9)
+dimnames(prior)[[1]] = p1
+dimnames(prior)[[2]] = p2
+discrete.bayes.2(twoproplike,prior)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>LearnBayes</em> version 2.15.1 <a href="00Index.html">Index</a>]</div>
+</body></html>

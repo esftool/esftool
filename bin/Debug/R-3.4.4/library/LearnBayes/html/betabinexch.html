@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Log posterior of logit mean and log precision for...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for betabinexch {LearnBayes}"><tr><td>betabinexch {LearnBayes}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Log posterior of logit mean and log precision for Binomial/beta exchangeable model</h2>
+
+<h3>Description</h3>
+
+<p>Computes the log posterior density of logit mean and log precision for a Binomial/beta exchangeable model
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+betabinexch(theta,data)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>theta</code></td>
+<td>
+<p>vector of parameter values of logit eta and log K</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>a matrix with columns y (counts) and n (sample sizes)</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>value of the log posterior
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jim Albert</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+n=c(20,20,20,20,20)
+y=c(1,4,3,6,10)
+data=cbind(y,n)
+theta=c(-1,0)
+betabinexch(theta,data)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>LearnBayes</em> version 2.15.1 <a href="00Index.html">Index</a>]</div>
+</body></html>

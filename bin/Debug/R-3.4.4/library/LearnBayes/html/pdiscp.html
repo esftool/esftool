@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Predictive distribution for a binomial sample with a discrete...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for pdiscp {LearnBayes}"><tr><td>pdiscp {LearnBayes}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Predictive distribution for a binomial sample with a discrete prior</h2>
+
+<h3>Description</h3>
+
+<p>Computes predictive distribution for number of successes of
+future binomial experiment
+with a discrete distribution for the proportion.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+pdiscp(p, probs, n, s)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>p</code></td>
+<td>
+<p>vector of proportion values</p>
+</td></tr>
+<tr valign="top"><td><code>probs</code></td>
+<td>
+<p>vector of probabilities</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p>size of future binomial sample</p>
+</td></tr>
+<tr valign="top"><td><code>s</code></td>
+<td>
+<p>vector of number of successes for future binomial experiment</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>vector of predictive probabilities for the values in the vector s
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jim Albert</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+p=c(.1,.2,.3,.4,.5,.6,.7,.8,.9)
+prob=c(0.05,0.10,0.10,0.15,0.20,0.15,0.10,0.10,0.05)
+n=10
+s=0:10
+pdiscp(p,prob,n,s)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>LearnBayes</em> version 2.15.1 <a href="00Index.html">Index</a>]</div>
+</body></html>

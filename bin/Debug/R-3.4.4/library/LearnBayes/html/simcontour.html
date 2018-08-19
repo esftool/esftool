@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Simulated draws from a bivariate density function on a grid</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for simcontour {LearnBayes}"><tr><td>simcontour {LearnBayes}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Simulated draws from a bivariate density function on a grid</h2>
+
+<h3>Description</h3>
+
+<p>For a general two parameter density defined on a grid, simulates a random sample.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+simcontour(logf,limits,data,m)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>logf</code></td>
+<td>
+<p>function that defines the logarithm of the  density</p>
+</td></tr>
+<tr valign="top"><td><code>limits</code></td>
+<td>
+<p>limits (xlo, xhi, ylo, yhi) that cover the joint probability density</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>vector or list of parameters associated with the function logpost</p>
+</td></tr>
+<tr valign="top"><td><code>m</code></td>
+<td>
+<p>size of simulated sample</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<table summary="R valueblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>vector of simulated draws of the first parameter</p>
+</td></tr>
+<tr valign="top"><td><code>y</code></td>
+<td>
+<p>vector of simulated draws of the second parameter</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Jim Albert</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+m=array(c(0,0),c(2,1))
+v=array(c(1,.6,.6,1),c(2,2))
+normpar=list(m=m,v=v)
+s=simcontour(lbinorm,c(-4,4,-4,4),normpar,1000)
+plot(s$x,s$y)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>LearnBayes</em> version 2.15.1 <a href="00Index.html">Index</a>]</div>
+</body></html>

@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A06A226D-9CF7-4450-895C-4B442BB5980C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ESFTool</RootNamespace>
+    <AssemblyName>ESFTool</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DotSpatial.Analysis">
+      <HintPath>..\..\..\DotSpatial\Release\DotSpatial.Analysis.dll</HintPath>
+    </Reference>
+    <Reference Include="DotSpatial.Compatibility">
+      <HintPath>..\..\..\DotSpatial\Release\DotSpatial.Compatibility.dll</HintPath>
+    </Reference>
+    <Reference Include="DotSpatial.Controls">
+      <HintPath>..\..\..\DotSpatial\Release\DotSpatial.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="DotSpatial.Data">
+      <HintPath>..\..\..\DotSpatial\Release\DotSpatial.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="DotSpatial.Data.Forms">
+      <HintPath>..\..\..\DotSpatial\Release\DotSpatial.Data.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="DotSpatial.Extensions">
+      <HintPath>..\..\..\DotSpatial\Release\DotSpatial.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="DotSpatial.GeoAPI">
+      <HintPath>..\..\..\DotSpatial\Release\DotSpatial.GeoAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="DotSpatial.Modeling.Forms">
+      <HintPath>..\..\..\DotSpatial\Release\DotSpatial.Modeling.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="DotSpatial.NetTopologySuite">
+      <HintPath>..\..\..\DotSpatial\Release\DotSpatial.NetTopologySuite.dll</HintPath>
+    </Reference>
+    <Reference Include="DotSpatial.NTSExtension">
+      <HintPath>..\..\..\DotSpatial\Release\DotSpatial.NTSExtension.dll</HintPath>
+    </Reference>
+    <Reference Include="DotSpatial.Positioning">
+      <HintPath>..\..\..\DotSpatial\Release\DotSpatial.Positioning.dll</HintPath>
+    </Reference>
+    <Reference Include="DotSpatial.Positioning.Design">
+      <HintPath>..\..\..\DotSpatial\Release\DotSpatial.Positioning.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="DotSpatial.Positioning.Forms">
+      <HintPath>..\..\..\DotSpatial\Release\DotSpatial.Positioning.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="DotSpatial.Projections">
+      <HintPath>..\..\..\DotSpatial\Release\DotSpatial.Projections.dll</HintPath>
+    </Reference>
+    <Reference Include="DotSpatial.Projections.Forms">
+      <HintPath>..\..\..\DotSpatial\Release\DotSpatial.Projections.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="DotSpatial.Serialization">
+      <HintPath>..\..\..\DotSpatial\Release\DotSpatial.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="DotSpatial.Symbology">
+      <HintPath>..\..\..\DotSpatial\Release\DotSpatial.Symbology.dll</HintPath>
+    </Reference>
+    <Reference Include="DotSpatial.Symbology.Forms">
+      <HintPath>..\..\..\DotSpatial\Release\DotSpatial.Symbology.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="RDotNet">
+      <HintPath>..\..\..\..\..\2014\NIH_withDrChun_DrGriffith\Programmings\VisUncertainty\VisUncertainty\bin\Debug\RDotNet.dll</HintPath>
+    </Reference>
+    <Reference Include="RDotNet.Graphics">
+      <HintPath>..\..\..\..\..\2014\NIH_withDrChun_DrGriffith\Programmings\VisUncertainty\VisUncertainty\bin\Debug\RDotNet.Graphics.dll</HintPath>
+    </Reference>
+    <Reference Include="RDotNet.NativeLibrary">
+      <HintPath>..\..\..\..\..\2014\NIH_withDrChun_DrGriffith\Programmings\VisUncertainty\VisUncertainty\bin\Debug\RDotNet.NativeLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="clsSnippet.cs" />
+    <Compile Include="frmAttributeTable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAttributeTable.Designer.cs">
+      <DependentUpon>frmAttributeTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmBoxCox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBoxCox.Designer.cs">
+      <DependentUpon>frmBoxCox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmErrorLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmErrorLog.Designer.cs">
+      <DependentUpon>frmErrorLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmGLM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGLM.Designer.cs">
+      <DependentUpon>frmGLM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPlot.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPlot.Designer.cs">
+      <DependentUpon>frmPlot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmQQPlotResult.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmQQPlotResult.Designer.cs">
+      <DependentUpon>frmQQPlotResult.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmRegression.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRegression.Designer.cs">
+      <DependentUpon>frmRegression.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSpatialRegression.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSpatialRegression.Designer.cs">
+      <DependentUpon>frmSpatialRegression.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmVaryingCoefficients.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmVaryingCoefficients.Designer.cs">
+      <DependentUpon>frmVaryingCoefficients.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmAdvSWM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAdvSWM.Designer.cs">
+      <DependentUpon>frmAdvSWM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmESF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmESF.Designer.cs">
+      <DependentUpon>frmESF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProgress.Designer.cs">
+      <DependentUpon>frmProgress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmRegResult.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRegResult.Designer.cs">
+      <DependentUpon>frmRegResult.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSubsetPoly.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSubsetPoly.Designer.cs">
+      <DependentUpon>frmSubsetPoly.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmAttributeTable.resx">
+      <DependentUpon>frmAttributeTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBoxCox.resx">
+      <DependentUpon>frmBoxCox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmErrorLog.resx">
+      <DependentUpon>frmErrorLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGLM.resx">
+      <DependentUpon>frmGLM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPlot.resx">
+      <DependentUpon>frmPlot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmQQPlotResult.resx">
+      <DependentUpon>frmQQPlotResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRegression.resx">
+      <DependentUpon>frmRegression.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSpatialRegression.resx">
+      <DependentUpon>frmSpatialRegression.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmVaryingCoefficients.resx">
+      <DependentUpon>frmVaryingCoefficients.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAdvSWM.resx">
+      <DependentUpon>frmAdvSWM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmESF.resx">
+      <DependentUpon>frmESF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProgress.resx">
+      <DependentUpon>frmProgress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRegResult.resx">
+      <DependentUpon>frmRegResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSubsetPoly.resx">
+      <DependentUpon>frmSubsetPoly.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

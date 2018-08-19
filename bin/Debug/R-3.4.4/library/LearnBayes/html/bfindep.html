@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Bayes factor against independence assuming alternatives close...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for bfindep {LearnBayes}"><tr><td>bfindep {LearnBayes}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Bayes factor against independence assuming alternatives close to independence</h2>
+
+<h3>Description</h3>
+
+<p>Computes a Bayes factor against independence for a two-way contingency table assuming
+a &quot;close to independence&quot; alternative model</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+bfindep(y,K,m)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>y</code></td>
+<td>
+<p>matrix of counts</p>
+</td></tr>
+<tr valign="top"><td><code>K</code></td>
+<td>
+<p>Dirichlet precision hyperparameter</p>
+</td></tr>
+<tr valign="top"><td><code>m</code></td>
+<td>
+<p>number of simulations</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<table summary="R valueblock">
+<tr valign="top"><td><code>bf</code></td>
+<td>
+<p>value of the Bayes factor against hypothesis of independence</p>
+</td></tr>
+<tr valign="top"><td><code>nse</code></td>
+<td>
+<p>estimate of the simulation standard error of the computed Bayes factor</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Jim Albert</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+y=matrix(c(10,4,6,3,6,10),c(2,3))
+K=20
+m=1000
+bfindep(y,K,m)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>LearnBayes</em> version 2.15.1 <a href="00Index.html">Index</a>]</div>
+</body></html>

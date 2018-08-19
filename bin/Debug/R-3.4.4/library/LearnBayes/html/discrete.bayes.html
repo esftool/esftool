@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Posterior distribution with discrete priors</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for discrete.bayes {LearnBayes}"><tr><td>discrete.bayes {LearnBayes}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Posterior distribution with discrete priors</h2>
+
+<h3>Description</h3>
+
+<p>Computes the posterior distribution for an arbitrary one parameter distribution
+for a discrete prior
+distribution.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+discrete.bayes(df,prior,y,...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>df</code></td>
+<td>
+<p>name of the function defining the sampling density</p>
+</td></tr>
+<tr valign="top"><td><code>prior</code></td>
+<td>
+<p>vector defining the prior density; names of the vector
+define the parameter values and entries of the vector define 
+the prior probabilities</p>
+</td></tr>
+<tr valign="top"><td><code>y</code></td>
+<td>
+<p>vector of data values</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>any further fixed parameter values used in the sampling density
+function</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<table summary="R valueblock">
+<tr valign="top"><td><code>prob</code></td>
+<td>
+<p>vector of posterior probabilities</p>
+</td></tr>
+<tr valign="top"><td><code>pred</code></td>
+<td>
+<p>scalar with prior predictive probability</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Jim Albert</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+prior=c(.25,.25,.25,.25)
+names(prior)=c(.2,.25,.3,.35)
+y=5
+n=10
+discrete.bayes(dbinom,prior,y,size=n)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>LearnBayes</em> version 2.15.1 <a href="00Index.html">Index</a>]</div>
+</body></html>

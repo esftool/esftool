@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Log posterior of median and log scale parameters for Cauchy...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for cauchyerrorpost {LearnBayes}"><tr><td>cauchyerrorpost {LearnBayes}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Log posterior of median and log scale parameters for Cauchy sampling</h2>
+
+<h3>Description</h3>
+
+<p>Computes the log posterior density of (M,log S)  when
+a sample is taken from a Cauchy density with location M and scale S and a uniform
+prior distribution is taken on (M, log S)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+cauchyerrorpost(theta,data)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>theta</code></td>
+<td>
+<p>vector of parameter values of M and log S</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>vector containing sample of observations</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>value of the log posterior
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jim Albert</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data=c(108, 51, 7, 43, 52, 54, 53, 49, 21, 48)
+theta=c(40,1)
+cauchyerrorpost(theta,data)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>LearnBayes</em> version 2.15.1 <a href="00Index.html">Index</a>]</div>
+</body></html>

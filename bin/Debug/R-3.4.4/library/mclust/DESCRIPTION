@@ -1,0 +1,33 @@
+Package: mclust
+Version: 5.4
+Date: 2017-11-21
+Title: Gaussian Mixture Modelling for Model-Based Clustering,
+        Classification, and Density Estimation
+Description: Gaussian finite mixture models fitted via EM algorithm for model-based clustering, classification, and density estimation, including Bayesian regularization, dimension reduction for visualisation, and resampling-based inference.
+Authors@R: c(person("Chris", "Fraley", role = "aut"),
+             person("Adrian E.", "Raftery", role = "aut"),
+             person("Luca", "Scrucca", role = c("aut", "cre"),
+                    email = "luca.scrucca@unipg.it"),
+             person("Thomas Brendan", "Murphy", role = "ctb"),
+             person("Michael", "Fop", role = "ctb"))
+Depends: R (>= 3.0)
+Imports: stats, utils, graphics, grDevices
+Suggests: knitr (>= 1.12), rmarkdown (>= 0.9), mix (>= 1.0), geometry
+        (>= 0.3-6), MASS
+License: GPL (>= 2)
+URL: http://www.stat.washington.edu/mclust/
+VignetteBuilder: knitr
+Repository: CRAN
+ByteCompile: true
+LazyLoad: yes
+NeedsCompilation: yes
+Packaged: 2017-11-21 15:00:11 UTC; luca
+Author: Chris Fraley [aut],
+  Adrian E. Raftery [aut],
+  Luca Scrucca [aut, cre],
+  Thomas Brendan Murphy [ctb],
+  Michael Fop [ctb]
+Maintainer: Luca Scrucca <luca.scrucca@unipg.it>
+Date/Publication: 2017-11-22 10:21:55 UTC
+Built: R 3.4.4; x86_64-w64-mingw32; 2018-03-18 15:19:39 UTC; windows
+Archs: i386, x64

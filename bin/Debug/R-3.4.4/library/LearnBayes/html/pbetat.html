@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Bayesian test of a proportion</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for pbetat {LearnBayes}"><tr><td>pbetat {LearnBayes}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Bayesian test of a proportion</h2>
+
+<h3>Description</h3>
+
+<p>Bayesian test that a proportion is equal to a specified
+value using a beta prior</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+pbetat(p0,prob,ab,data)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>p0</code></td>
+<td>
+<p>value of the proportion to be tested </p>
+</td></tr>
+<tr valign="top"><td><code>prob</code></td>
+<td>
+<p>prior probability of the hypothesis</p>
+</td></tr>
+<tr valign="top"><td><code>ab</code></td>
+<td>
+<p>vector of parameter values of the beta prior under the alternative hypothesis</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>vector containing the number of successes and number of failures</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<table summary="R valueblock">
+<tr valign="top"><td><code>bf</code></td>
+<td>
+<p>the Bayes factor
+in support of the null hypothesis</p>
+</td></tr>
+<tr valign="top"><td><code>post</code></td>
+<td>
+<p>the posterior probability
+of the null hypothesis</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Jim Albert</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+p0=.5
+prob=.5
+ab=c(10,10)
+data=c(5,15)
+pbetat(p0,prob,ab,data)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>LearnBayes</em> version 2.15.1 <a href="00Index.html">Index</a>]</div>
+</body></html>

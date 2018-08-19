@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Bayesian test of a two-sided hypothesis about a normal mean</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for mnormt.twosided {LearnBayes}"><tr><td>mnormt.twosided {LearnBayes}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Bayesian test of a two-sided hypothesis about a normal mean</h2>
+
+<h3>Description</h3>
+
+<p>Bayesian test that a normal mean is equal to a specified
+value using a normal prior</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+mnormt.twosided(m0, prob, t, data)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>m0</code></td>
+<td>
+<p>value of the mean to be tested </p>
+</td></tr>
+<tr valign="top"><td><code>prob</code></td>
+<td>
+<p>prior probability of the hypothesis</p>
+</td></tr>
+<tr valign="top"><td><code>t</code></td>
+<td>
+<p>vector of values of the prior standard
+deviation under the alternative hypothesis</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>vector containing the sample mean,
+the sample size, and the known value of the
+population standard deviation</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<table summary="R valueblock">
+<tr valign="top"><td><code>bf</code></td>
+<td>
+<p>vector of values of the Bayes factor
+in support of the null hypothesis</p>
+</td></tr>
+<tr valign="top"><td><code>post</code></td>
+<td>
+<p>vector of posterior probabilities
+of the null hypothesis</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Jim Albert</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+m0=170
+prob=.5
+tau=c(.5,1,2,4,8)
+samplesize=10
+samplemean=176
+popsd=3
+data=c(samplemean,samplesize,popsd)
+mnormt.twosided(m0,prob,tau,data)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>LearnBayes</em> version 2.15.1 <a href="00Index.html">Index</a>]</div>
+</body></html>
