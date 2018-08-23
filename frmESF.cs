@@ -202,7 +202,7 @@ namespace ESFTool
                         "Please choose at least one input variable");
                     return;
                 }
-                if (lstIndeVar.Items.Count == 0)
+                if (lstIndeVar.Items.Count == 0 && chkIntercept.Checked == false)
                 {
                     MessageBox.Show("Please select independents input variables to be used in the regression model.",
                         "Please choose at least one input variable");
@@ -224,6 +224,9 @@ namespace ESFTool
 
                 //Get number of Independent variables            
                 int nIDepen = lstIndeVar.Items.Count;
+                if (chkIntercept.Checked)
+                    nIDepen = 0;
+
                 // Gets the column of the dependent variable
                 String dependentName = (string)cboFieldName.SelectedItem;
                 string strNoramlName = cboNormalization.Text;
@@ -340,15 +343,20 @@ namespace ESFTool
                 else
                     plotCommmand.Append(dependentName + "~");
 
-                for (int j = 0; j < nIDepen; j++)
+                if (chkIntercept.Checked == false)
                 {
-                    //double[] arrVector = arrInDepen.GetColumn<double>(j);
-                    //NumericVector vecIndepen = pEngine.CreateNumericVector(arrVector);
-                    NumericVector vecIndepen = m_pEngine.CreateNumericVector(arrInDepen[j]);
-                    m_pEngine.SetSymbol(independentNames[j], vecIndepen);
-                    plotCommmand.Append(independentNames[j] + "+");
+                    for (int j = 0; j < nIDepen; j++)
+                    {
+                        //double[] arrVector = arrInDepen.GetColumn<double>(j);
+                        //NumericVector vecIndepen = pEngine.CreateNumericVector(arrVector);
+                        NumericVector vecIndepen = m_pEngine.CreateNumericVector(arrInDepen[j]);
+                        m_pEngine.SetSymbol(independentNames[j], vecIndepen);
+                        plotCommmand.Append(independentNames[j] + "+");
+                    }
+                    plotCommmand.Remove(plotCommmand.Length - 1, 1);
                 }
-                plotCommmand.Remove(plotCommmand.Length - 1, 1);
+                else
+                    plotCommmand.Append("1");
 
                 m_pEngine.Evaluate("sample.n <- length(sample.nb)");
                 m_pEngine.Evaluate("B <- listw2mat(sample.listb); M <- diag(sample.n) - matrix(1/sample.n, sample.n, sample.n); MBM <- M%*%B%*%M");
@@ -1041,6 +1049,22 @@ namespace ESFTool
                             return;
                         }
                     }
+                    if (pDT.Columns.IndexOf(strSFilterName) == -1)
+                    {
+                        //Add fields
+                        DataColumn pColumn = new DataColumn(strSFilterName);
+                        pColumn.DataType = Type.GetType("System.Double");
+                        pDT.Columns.Add(pColumn);
+                    }
+                    else
+                    {
+                        DialogResult dialogResult = MessageBox.Show("Do you want to overwrite " + strResiFldName + " field?", "Overwrite", MessageBoxButtons.YesNo);
+
+                        if (dialogResult == DialogResult.No)
+                        {
+                            return;
+                        }
+                    }
 
                     //Update Field
                     int featureIdx = 0;
@@ -1340,6 +1364,24 @@ namespace ESFTool
             pfrmAdvSWM.ShowDialog();
             m_blnCreateSWM = pfrmAdvSWM.blnSWMCreation;
             txtSWM.Text = pfrmAdvSWM.txtSWM.Text;
+        }
+
+        private void chkIntercept_CheckedChanged(object sender, EventArgs e)
+        {
+            if(chkIntercept.Checked)
+            {
+                lstFields.Enabled = false;
+                lstIndeVar.Enabled = false;
+                btnMoveLeft.Enabled = false;
+                btnMoveRight.Enabled = false;
+            }
+            else
+            {
+                lstFields.Enabled = false;
+                lstIndeVar.Enabled = false;
+                btnMoveLeft.Enabled = false;
+                btnMoveRight.Enabled = false;
+            }
         }
     }
 }

@@ -205,223 +205,232 @@ namespace ESFTool
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            if (cboFieldName.Text == "")
+            try
             {
-                MessageBox.Show("Please select the dependent input variables to be used in the regression model.",
-                    "Please choose at least one input variable");
-                return;
-            }
-            if (lstIndeVar.Items.Count == 0)
-            {
-                MessageBox.Show("Please select independents input variables to be used in the regression model.",
-                    "Please choose at least one input variable");
-                return;
-            }
-            if (cboFamily.Text == "Binomial" && cboNormalization.Text == "")
-            {
-                MessageBox.Show("Please select a variable for normailization");
-                return;
-            }
-            frmProgress pfrmProgress = new frmProgress();
-            pfrmProgress.lblStatus.Text = "Pre-Processing:";
-            pfrmProgress.pgbProgress.Style = ProgressBarStyle.Marquee;
-            pfrmProgress.Show();
-
-
-            //Decimal places
-            int intDeciPlaces = 5;
-
-            //Get number of Independent variables            
-            int nIDepen = lstIndeVar.Items.Count;
-            // Gets the column of the dependent variable
-            String dependentName = (string)cboFieldName.SelectedItem;
-            string strNoramlName = cboNormalization.Text;
-            //sourceTable.AcceptChanges();
-            //DataTable dependent = sourceTable.DefaultView.ToTable(false, dependentName);
-
-            // Gets the columns of the independent variables
-            String[] independentNames = new string[nIDepen];
-            for (int j = 0; j < nIDepen; j++)
-            {
-                independentNames[j] = (string)lstIndeVar.Items[j];
-            }
-
-            int nFeature = m_dt.Rows.Count;
-
-            //Warning for method
-            if (nFeature > m_pForm.intWarningCount)
-            {
-                DialogResult dialogResult = MessageBox.Show("It might take a lot of time. Do you want to continue?", "Warning", MessageBoxButtons.YesNo);
-
-                if (dialogResult == DialogResult.No)
+                if (cboFieldName.Text == "")
                 {
-                    pfrmProgress.Close();
+                    MessageBox.Show("Please select the dependent input variables to be used in the regression model.",
+                        "Please choose at least one input variable");
                     return;
                 }
-            }
+                if (lstIndeVar.Items.Count == 0)
+                {
+                    MessageBox.Show("Please select independents input variables to be used in the regression model.",
+                        "Please choose at least one input variable");
+                    return;
+                }
+                if (cboFamily.Text == "Binomial" && cboNormalization.Text == "")
+                {
+                    MessageBox.Show("Please select a variable for normailization");
+                    return;
+                }
+                frmProgress pfrmProgress = new frmProgress();
+                pfrmProgress.lblStatus.Text = "Pre-Processing:";
+                pfrmProgress.pgbProgress.Style = ProgressBarStyle.Marquee;
+                pfrmProgress.Show();
 
-            //Get index for independent and dependent variables
-            int intDepenIdx = m_dt.Columns.IndexOf(dependentName);
-            int intNoramIdx = -1;
-            if (strNoramlName != "")
-                intNoramIdx = m_dt.Columns.IndexOf(strNoramlName);
 
-            int[] idxes = new int[nIDepen];
+                //Decimal places
+                int intDeciPlaces = 5;
 
-            for (int j = 0; j < nIDepen; j++)
-            {
-                idxes[j] = m_dt.Columns.IndexOf(independentNames[j]);
-            }
+                //Get number of Independent variables            
+                int nIDepen = lstIndeVar.Items.Count;
+                // Gets the column of the dependent variable
+                String dependentName = (string)cboFieldName.SelectedItem;
+                string strNoramlName = cboNormalization.Text;
+                //sourceTable.AcceptChanges();
+                //DataTable dependent = sourceTable.DefaultView.ToTable(false, dependentName);
 
-            //Store independent values at Array
-            double[] arrDepen = new double[nFeature];
-            double[][] arrInDepen = new double[nIDepen][];
-            double[] arrNormal = new double[nFeature];
+                // Gets the columns of the independent variables
+                String[] independentNames = new string[nIDepen];
+                for (int j = 0; j < nIDepen; j++)
+                {
+                    independentNames[j] = (string)lstIndeVar.Items[j];
+                }
 
-            for (int j = 0; j < nIDepen; j++)
-            {
-                arrInDepen[j] = new double[nFeature];
-            }
+                int nFeature = m_dt.Rows.Count;
 
-            int i = 0;
-            foreach (DataRow row in m_dt.Rows)
-            {
+                //Warning for method
+                if (nFeature > m_pForm.intWarningCount)
+                {
+                    DialogResult dialogResult = MessageBox.Show("It might take a lot of time. Do you want to continue?", "Warning", MessageBoxButtons.YesNo);
 
-                arrDepen[i] = Convert.ToDouble(row[intDepenIdx]);
+                    if (dialogResult == DialogResult.No)
+                    {
+                        pfrmProgress.Close();
+                        return;
+                    }
+                }
 
-                if (intNoramIdx != -1)
-                    arrNormal[i] = Convert.ToDouble(row[intNoramIdx]);
+                //Get index for independent and dependent variables
+                int intDepenIdx = m_dt.Columns.IndexOf(dependentName);
+                int intNoramIdx = -1;
+                if (strNoramlName != "")
+                    intNoramIdx = m_dt.Columns.IndexOf(strNoramlName);
+
+                int[] idxes = new int[nIDepen];
 
                 for (int j = 0; j < nIDepen; j++)
                 {
-                    arrInDepen[j][i] = Convert.ToDouble(row[idxes[j]]);
+                    idxes[j] = m_dt.Columns.IndexOf(independentNames[j]);
                 }
-                i++;
-            }
 
-            //Plot command for R
-            StringBuilder plotCommmand = new StringBuilder();
+                //Store independent values at Array
+                double[] arrDepen = new double[nFeature];
+                double[][] arrInDepen = new double[nIDepen][];
+                double[] arrNormal = new double[nFeature];
 
-            if (!m_blnCreateSWM)
-            {
-                //Get the file path and name to create spatial weight matrix
-                string strNameR = m_pSnippet.FilePathinRfromLayer(m_pMaplayer);
-
-                if (strNameR == null)
-                    return;
-
-                //Create spatial weight matrix in R
-                if (m_pMaplayer is MapPointLayer)
-                    m_pEngine.Evaluate("sample.shp <- readShapePoints('" + strNameR + "')");
-                else if (m_pMaplayer is MapPolygonLayer)
-                    m_pEngine.Evaluate("sample.shp <- readShapePoly('" + strNameR + "')");
-                else
+                for (int j = 0; j < nIDepen; j++)
                 {
-                    MessageBox.Show("This geometry type is not supported");
-                    pfrmProgress.Close();
-                    this.Close();
+                    arrInDepen[j] = new double[nFeature];
+                }
+
+                int i = 0;
+                foreach (DataRow row in m_dt.Rows)
+                {
+
+                    arrDepen[i] = Convert.ToDouble(row[intDepenIdx]);
+
+                    if (intNoramIdx != -1)
+                        arrNormal[i] = Convert.ToDouble(row[intNoramIdx]);
+
+                    for (int j = 0; j < nIDepen; j++)
+                    {
+                        arrInDepen[j][i] = Convert.ToDouble(row[idxes[j]]);
+                    }
+                    i++;
+                }
+
+                //Plot command for R
+                StringBuilder plotCommmand = new StringBuilder();
+
+                if (!m_blnCreateSWM)
+                {
+                    //Get the file path and name to create spatial weight matrix
+                    string strNameR = m_pSnippet.FilePathinRfromLayer(m_pMaplayer);
+
+                    if (strNameR == null)
+                        return;
+
+                    //Create spatial weight matrix in R
+                    if (m_pMaplayer is MapPointLayer)
+                        m_pEngine.Evaluate("sample.shp <- readShapePoints('" + strNameR + "')");
+                    else if (m_pMaplayer is MapPolygonLayer)
+                        m_pEngine.Evaluate("sample.shp <- readShapePoly('" + strNameR + "')");
+                    else
+                    {
+                        MessageBox.Show("This geometry type is not supported");
+                        pfrmProgress.Close();
+                        this.Close();
+                    }
+
+
+                    int intSuccess = m_pSnippet.CreateSpatialWeightMatrix(m_pEngine, m_pMaplayer, txtSWM.Text, pfrmProgress);
+                    if (intSuccess == 0)
+                        return;
                 }
 
 
-                int intSuccess = m_pSnippet.CreateSpatialWeightMatrix(m_pEngine, m_pMaplayer, txtSWM.Text, pfrmProgress);
-                if (intSuccess == 0)
-                    return;
+                //Dependent variable to R vector
+                NumericVector vecDepen = m_pEngine.CreateNumericVector(arrDepen);
+                m_pEngine.SetSymbol(dependentName, vecDepen);
+                //plotCommmand.Append("lm.full <- " + dependentName + "~");
+                NumericVector vecNormal = null;
+                if (cboFamily.Text == "Binomial")
+                {
+                    vecNormal = m_pEngine.CreateNumericVector(arrNormal);
+                    m_pEngine.SetSymbol(strNoramlName, vecNormal);
+                    plotCommmand.Append("cbind(" + dependentName + ", " + strNoramlName + "-" + dependentName + ")~");
+                }
+                else if (cboFamily.Text == "Poisson" && intNoramIdx != -1)
+                {
+                    vecNormal = m_pEngine.CreateNumericVector(arrNormal);
+                    m_pEngine.SetSymbol(strNoramlName, vecNormal);
+                    plotCommmand.Append(dependentName + "~");
+                }
+                else
+                    plotCommmand.Append(dependentName + "~");
+
+                for (int j = 0; j < nIDepen; j++)
+                {
+                    //double[] arrVector = arrInDepen.GetColumn<double>(j);
+                    //NumericVector vecIndepen = pEngine.CreateNumericVector(arrVector);
+                    NumericVector vecIndepen = m_pEngine.CreateNumericVector(arrInDepen[j]);
+                    m_pEngine.SetSymbol(independentNames[j], vecIndepen);
+                    plotCommmand.Append(independentNames[j] + "+");
+                }
+                plotCommmand.Remove(plotCommmand.Length - 1, 1);
+
+                m_pEngine.Evaluate("sample.n <- length(sample.nb)");
+                m_pEngine.Evaluate("B <- listw2mat(sample.listb); M <- diag(sample.n) - matrix(1/sample.n, sample.n, sample.n); MBM <- M%*%B%*%M");
+                m_pEngine.Evaluate("eig <- eigen(MBM)");
+                m_pEngine.Evaluate("EV <- as.data.frame( eig$vectors[,]); colnames(EV) <- paste('EV', 1:NCOL(EV), sep='')");
+                double dblNCandidateEvs = 0;
+
+                //Select Candidate EVs
+                pfrmProgress.lblStatus.Text = "Selecting Candidate EVs:";
+
+                string strEValue = nudEValue.Value.ToString();
+                string strDirection = cboDirection.Text;
+
+                if (strDirection == "Positive Only")
+                {
+                    m_pEngine.Evaluate("np <- length(eig$values[eig$values/eig$values[1]>" + strEValue + "])");
+                    m_pEngine.Evaluate("EV <- EV[,1:np]");
+                    dblNCandidateEvs = m_pEngine.Evaluate("np").AsNumeric().First();
+                }
+                else if (strDirection == "Negative Only")
+                {
+                    m_pEngine.Evaluate("n.all <- length(eig$values)");
+                    m_pEngine.Evaluate("nn <- length(eig$values[eig$values/eig$values[1] < -" + strEValue + "])");
+                    m_pEngine.Evaluate("n.start <- n.all-nn+1");
+                    m_pEngine.Evaluate("EV <- EV[,n.start:n.all]");
+                    dblNCandidateEvs = m_pEngine.Evaluate("nn").AsNumeric().First();
+                }
+                else if (strDirection == "Both")
+                {
+                    m_pEngine.Evaluate("np <- length(eig$values[eig$values/eig$values[1]>" + strEValue + "])");
+                    m_pEngine.Evaluate("n.all <- length(eig$values)");
+                    m_pEngine.Evaluate("nn <- length(eig$values[eig$values/eig$values[1] < -" + strEValue + "])");
+                    m_pEngine.Evaluate("n.start <- n.all-nn+1");
+                    m_pEngine.Evaluate("EV <- EV[,c(1:np, n.start:n.all)]");
+                    dblNCandidateEvs = m_pEngine.Evaluate("nn+np").AsNumeric().First();
+                }
+
+                //Adding Varing EVs
+                StringBuilder SEV_builder = new StringBuilder();
+                StringBuilder SEV_Name_builder = new StringBuilder();
+                SEV_builder.Append("sEV <- cbind(EV, ");
+                SEV_Name_builder.Append("colnames(sEV) <- c(colnames(EV), ");
+                for (int j = 0; j < nIDepen; j++)
+                {
+                    SEV_builder.Append(independentNames[j] + "*EV, ");
+                    SEV_Name_builder.Append("as.character(paste('" + independentNames[j] + "', ':', colnames(EV), sep='')), ");
+                }
+                SEV_builder.Remove(SEV_builder.Length - 2, 2);
+                SEV_builder.Append(")");
+
+                SEV_Name_builder.Remove(SEV_Name_builder.Length - 2, 2);
+                SEV_Name_builder.Append(")");
+
+                m_pEngine.Evaluate(SEV_builder.ToString());
+                m_pEngine.Evaluate(SEV_Name_builder.ToString());
+
+                if (cboFamily.Text == "Linear (Gaussian)")
+                    LinearESF(pfrmProgress, m_pMaplayer, plotCommmand.ToString(), nIDepen, independentNames, dblNCandidateEvs, intDeciPlaces);
+                else if (cboFamily.Text == "Poisson")
+                    PoissonESF(pfrmProgress, m_pMaplayer, plotCommmand.ToString(), nIDepen, independentNames, strNoramlName, dblNCandidateEvs, intDeciPlaces);
+                else if (cboFamily.Text == "Binomial")
+                    BinomESF(pfrmProgress, m_pMaplayer, plotCommmand.ToString(), nIDepen, independentNames, dblNCandidateEvs, intDeciPlaces);
+
+                pfrmProgress.Close();
             }
-
-
-            //Dependent variable to R vector
-            NumericVector vecDepen = m_pEngine.CreateNumericVector(arrDepen);
-            m_pEngine.SetSymbol(dependentName, vecDepen);
-            //plotCommmand.Append("lm.full <- " + dependentName + "~");
-            NumericVector vecNormal = null;
-            if (cboFamily.Text == "Binomial")
+            catch (Exception ex)
             {
-                vecNormal = m_pEngine.CreateNumericVector(arrNormal);
-                m_pEngine.SetSymbol(strNoramlName, vecNormal);
-                plotCommmand.Append("cbind(" + dependentName + ", " + strNoramlName + "-" + dependentName + ")~");
+                frmErrorLog pfrmErrorLog = new frmErrorLog(); pfrmErrorLog.ex = ex; pfrmErrorLog.ShowDialog();
+                
+                return;
             }
-            else if (cboFamily.Text == "Poisson" && intNoramIdx != -1)
-            {
-                vecNormal = m_pEngine.CreateNumericVector(arrNormal);
-                m_pEngine.SetSymbol(strNoramlName, vecNormal);
-                plotCommmand.Append(dependentName + "~");
-            }
-            else
-                plotCommmand.Append(dependentName + "~");
-
-            for (int j = 0; j < nIDepen; j++)
-            {
-                //double[] arrVector = arrInDepen.GetColumn<double>(j);
-                //NumericVector vecIndepen = pEngine.CreateNumericVector(arrVector);
-                NumericVector vecIndepen = m_pEngine.CreateNumericVector(arrInDepen[j]);
-                m_pEngine.SetSymbol(independentNames[j], vecIndepen);
-                plotCommmand.Append(independentNames[j] + "+");
-            }
-            plotCommmand.Remove(plotCommmand.Length - 1, 1);
-
-            m_pEngine.Evaluate("sample.n <- length(sample.nb)");
-            m_pEngine.Evaluate("B <- listw2mat(sample.listb); M <- diag(sample.n) - matrix(1/sample.n, sample.n, sample.n); MBM <- M%*%B%*%M");
-            m_pEngine.Evaluate("eig <- eigen(MBM)");
-            m_pEngine.Evaluate("EV <- as.data.frame( eig$vectors[,]); colnames(EV) <- paste('EV', 1:NCOL(EV), sep='')");
-            double dblNCandidateEvs = 0;
-
-            //Select Candidate EVs
-            pfrmProgress.lblStatus.Text = "Selecting Candidate EVs:";
-
-            string strEValue = nudEValue.Value.ToString();
-            string strDirection = cboDirection.Text;
-
-            if (strDirection == "Positive Only")
-            {
-                m_pEngine.Evaluate("np <- length(eig$values[eig$values/eig$values[1]>" + strEValue + "])");
-                m_pEngine.Evaluate("EV <- EV[,1:np]");
-                dblNCandidateEvs = m_pEngine.Evaluate("np").AsNumeric().First();
-            }
-            else if (strDirection == "Negative Only")
-            {
-                m_pEngine.Evaluate("n.all <- length(eig$values)");
-                m_pEngine.Evaluate("nn <- length(eig$values[eig$values/eig$values[1] < -" + strEValue + "])");
-                m_pEngine.Evaluate("n.start <- n.all-nn+1");
-                m_pEngine.Evaluate("EV <- EV[,n.start:n.all]");
-                dblNCandidateEvs = m_pEngine.Evaluate("nn").AsNumeric().First();
-            }
-            else if (strDirection == "Both")
-            {
-                m_pEngine.Evaluate("np <- length(eig$values[eig$values/eig$values[1]>" + strEValue + "])");
-                m_pEngine.Evaluate("n.all <- length(eig$values)");
-                m_pEngine.Evaluate("nn <- length(eig$values[eig$values/eig$values[1] < -" + strEValue + "])");
-                m_pEngine.Evaluate("n.start <- n.all-nn+1");
-                m_pEngine.Evaluate("EV <- EV[,c(1:np, n.start:n.all)]");
-                dblNCandidateEvs = m_pEngine.Evaluate("nn+np").AsNumeric().First();
-            }
-
-            //Adding Varing EVs
-            StringBuilder SEV_builder = new StringBuilder();
-            StringBuilder SEV_Name_builder = new StringBuilder();
-            SEV_builder.Append("sEV <- cbind(EV, ");
-            SEV_Name_builder.Append("colnames(sEV) <- c(colnames(EV), ");
-            for (int j = 0; j < nIDepen; j++)
-            {
-                SEV_builder.Append(independentNames[j] + "*EV, ");
-                SEV_Name_builder.Append("as.character(paste('" + independentNames[j] + "', ':', colnames(EV), sep='')), ");
-            }
-            SEV_builder.Remove(SEV_builder.Length - 2, 2);
-            SEV_builder.Append(")");
-            
-            SEV_Name_builder.Remove(SEV_Name_builder.Length - 2, 2);
-            SEV_Name_builder.Append(")");
-
-            m_pEngine.Evaluate(SEV_builder.ToString());
-            m_pEngine.Evaluate(SEV_Name_builder.ToString());
-
-            if (cboFamily.Text == "Linear (Gaussian)")
-                LinearESF(pfrmProgress, m_pMaplayer, plotCommmand.ToString(), nIDepen, independentNames, dblNCandidateEvs, intDeciPlaces);
-            else if (cboFamily.Text == "Poisson")
-                PoissonESF(pfrmProgress, m_pMaplayer, plotCommmand.ToString(), nIDepen, independentNames, strNoramlName, dblNCandidateEvs, intDeciPlaces);
-            else if (cboFamily.Text == "Binomial")
-                BinomESF(pfrmProgress, m_pMaplayer, plotCommmand.ToString(), nIDepen, independentNames, dblNCandidateEvs, intDeciPlaces);
-
-            pfrmProgress.Close();
         }
         private void LinearESF(frmProgress pfrmProgress, IMapLayer pMapLayer, string strLM, int nIDepen, String[] independentNames, double dblNCandidateEvs, int intDeciPlaces)
         {

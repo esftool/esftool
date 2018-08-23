@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmProgress));
             this.bgWorker = new System.ComponentModel.BackgroundWorker();
             this.pgbProgress = new System.Windows.Forms.ProgressBar();
             this.lblStatus = new System.Windows.Forms.Label();
@@ -63,6 +64,7 @@
             this.ClientSize = new System.Drawing.Size(284, 57);
             this.Controls.Add(this.pgbProgress);
             this.Controls.Add(this.lblStatus);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmProgress";

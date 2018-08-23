@@ -47,6 +47,7 @@
             this.generalizedLinearModelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spatialAutoregressionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.eigenvectorSpatialFilteringToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.spatiallyVaryingCoefficientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.MainToolStrip = new System.Windows.Forms.ToolStrip();
             this.NewMap = new System.Windows.Forms.ToolStripButton();
@@ -65,7 +66,6 @@
             this.identify = new System.Windows.Forms.ToolStripButton();
             this.Pointer = new System.Windows.Forms.ToolStripButton();
             this.ViewAttributeTable = new System.Windows.Forms.ToolStripButton();
-            this.spatiallyVaryingCoefficientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.spatialDockManager1)).BeginInit();
             this.spatialDockManager1.Panel1.SuspendLayout();
             this.spatialDockManager1.Panel2.SuspendLayout();
@@ -225,7 +225,7 @@
             // dataTransformationToolStripMenuItem
             // 
             this.dataTransformationToolStripMenuItem.Name = "dataTransformationToolStripMenuItem";
-            this.dataTransformationToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.dataTransformationToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.dataTransformationToolStripMenuItem.Text = "Data Transformation";
             this.dataTransformationToolStripMenuItem.Click += new System.EventHandler(this.dataTransformationToolStripMenuItem_Click);
             // 
@@ -244,30 +244,37 @@
             // linearRegressionToolStripMenuItem
             // 
             this.linearRegressionToolStripMenuItem.Name = "linearRegressionToolStripMenuItem";
-            this.linearRegressionToolStripMenuItem.Size = new System.Drawing.Size(227, 22);
+            this.linearRegressionToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
             this.linearRegressionToolStripMenuItem.Text = "Linear Regression";
             this.linearRegressionToolStripMenuItem.Click += new System.EventHandler(this.linearRegressionToolStripMenuItem_Click);
             // 
             // generalizedLinearModelsToolStripMenuItem
             // 
             this.generalizedLinearModelsToolStripMenuItem.Name = "generalizedLinearModelsToolStripMenuItem";
-            this.generalizedLinearModelsToolStripMenuItem.Size = new System.Drawing.Size(227, 22);
+            this.generalizedLinearModelsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
             this.generalizedLinearModelsToolStripMenuItem.Text = "Generalized Linear Models";
             this.generalizedLinearModelsToolStripMenuItem.Click += new System.EventHandler(this.generalizedLinearModelsToolStripMenuItem_Click);
             // 
             // spatialAutoregressionToolStripMenuItem
             // 
             this.spatialAutoregressionToolStripMenuItem.Name = "spatialAutoregressionToolStripMenuItem";
-            this.spatialAutoregressionToolStripMenuItem.Size = new System.Drawing.Size(227, 22);
+            this.spatialAutoregressionToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
             this.spatialAutoregressionToolStripMenuItem.Text = "Spatial Autoregression";
             this.spatialAutoregressionToolStripMenuItem.Click += new System.EventHandler(this.spatialAutoregressionToolStripMenuItem_Click);
             // 
             // eigenvectorSpatialFilteringToolStripMenuItem
             // 
             this.eigenvectorSpatialFilteringToolStripMenuItem.Name = "eigenvectorSpatialFilteringToolStripMenuItem";
-            this.eigenvectorSpatialFilteringToolStripMenuItem.Size = new System.Drawing.Size(227, 22);
+            this.eigenvectorSpatialFilteringToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
             this.eigenvectorSpatialFilteringToolStripMenuItem.Text = "Eigenvector Spatial Filtering";
             this.eigenvectorSpatialFilteringToolStripMenuItem.Click += new System.EventHandler(this.eigenvectorSpatialFilteringToolStripMenuItem_Click);
+            // 
+            // spatiallyVaryingCoefficientsToolStripMenuItem
+            // 
+            this.spatiallyVaryingCoefficientsToolStripMenuItem.Name = "spatiallyVaryingCoefficientsToolStripMenuItem";
+            this.spatiallyVaryingCoefficientsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.spatiallyVaryingCoefficientsToolStripMenuItem.Text = "Spatially Varying Coefficients";
+            this.spatiallyVaryingCoefficientsToolStripMenuItem.Click += new System.EventHandler(this.spatiallyVaryingCoefficientsToolStripMenuItem_Click);
             // 
             // panel1
             // 
@@ -460,13 +467,6 @@
             this.ViewAttributeTable.Text = "View AttributeTable";
             this.ViewAttributeTable.Click += new System.EventHandler(this.ViewAttributeTable_Click);
             // 
-            // spatiallyVaryingCoefficientsToolStripMenuItem
-            // 
-            this.spatiallyVaryingCoefficientsToolStripMenuItem.Name = "spatiallyVaryingCoefficientsToolStripMenuItem";
-            this.spatiallyVaryingCoefficientsToolStripMenuItem.Size = new System.Drawing.Size(227, 22);
-            this.spatiallyVaryingCoefficientsToolStripMenuItem.Text = "Spatially Varying Coefficients";
-            this.spatiallyVaryingCoefficientsToolStripMenuItem.Click += new System.EventHandler(this.spatiallyVaryingCoefficientsToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -475,8 +475,9 @@
             this.Controls.Add(this.spatialDockManager1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "ESF Tool";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.spatialDockManager1.Panel1.ResumeLayout(false);
             this.spatialDockManager1.Panel2.ResumeLayout(false);

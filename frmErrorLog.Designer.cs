@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmErrorLog));
             this.label3 = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.txtStackTrace = new System.Windows.Forms.TextBox();
@@ -102,6 +103,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtMessages);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmErrorLog";
             this.Text = "frmErrorLog";
             this.Shown += new System.EventHandler(this.frmErrorLog_Shown);

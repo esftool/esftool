@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "Residuals",
             "glm_resi"}, -1);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmGLM));
             this.chkResiAuto = new System.Windows.Forms.CheckBox();
             this.btnOpenSWM = new System.Windows.Forms.Button();
             this.lblSWM = new System.Windows.Forms.Label();
@@ -59,6 +60,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cboTargetLayer = new System.Windows.Forms.ComboBox();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.chkIntercept = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.grbSave.SuspendLayout();
             this.SuspendLayout();
@@ -101,7 +103,7 @@
             this.groupBox1.Controls.Add(this.btnOpenSWM);
             this.groupBox1.Controls.Add(this.txtSWM);
             this.groupBox1.Controls.Add(this.lblSWM);
-            this.groupBox1.Location = new System.Drawing.Point(308, 24);
+            this.groupBox1.Location = new System.Drawing.Point(308, 53);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(274, 90);
             this.groupBox1.TabIndex = 109;
@@ -168,7 +170,7 @@
             this.lstSave.Enabled = false;
             this.lstSave.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lstSave.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem12});
+            listViewItem1});
             this.lstSave.LabelEdit = true;
             this.lstSave.Location = new System.Drawing.Point(12, 64);
             this.lstSave.Name = "lstSave";
@@ -183,7 +185,7 @@
             this.grbSave.Controls.Add(this.cboResiType);
             this.grbSave.Controls.Add(this.lstSave);
             this.grbSave.Controls.Add(this.chkSave);
-            this.grbSave.Location = new System.Drawing.Point(308, 124);
+            this.grbSave.Location = new System.Drawing.Point(308, 153);
             this.grbSave.Name = "grbSave";
             this.grbSave.Size = new System.Drawing.Size(274, 130);
             this.grbSave.TabIndex = 108;
@@ -231,7 +233,7 @@
             // 
             // btnRun
             // 
-            this.btnRun.Location = new System.Drawing.Point(308, 275);
+            this.btnRun.Location = new System.Drawing.Point(308, 304);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(115, 23);
             this.btnRun.TabIndex = 102;
@@ -300,7 +302,7 @@
             this.lstFields.Location = new System.Drawing.Point(18, 197);
             this.lstFields.Name = "lstFields";
             this.lstFields.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lstFields.Size = new System.Drawing.Size(113, 121);
+            this.lstFields.Size = new System.Drawing.Size(113, 108);
             this.lstFields.TabIndex = 95;
             this.lstFields.DoubleClick += new System.EventHandler(this.lstFields_DoubleClick);
             // 
@@ -310,7 +312,7 @@
             this.lstIndeVar.Location = new System.Drawing.Point(171, 200);
             this.lstIndeVar.Name = "lstIndeVar";
             this.lstIndeVar.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lstIndeVar.Size = new System.Drawing.Size(113, 121);
+            this.lstIndeVar.Size = new System.Drawing.Size(113, 108);
             this.lstIndeVar.TabIndex = 94;
             this.lstIndeVar.DoubleClick += new System.EventHandler(this.lstIndeVar_DoubleClick);
             // 
@@ -334,7 +336,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(467, 275);
+            this.btnCancel.Location = new System.Drawing.Point(467, 304);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(115, 23);
             this.btnCancel.TabIndex = 103;
@@ -342,12 +344,24 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // chkIntercept
+            // 
+            this.chkIntercept.AutoSize = true;
+            this.chkIntercept.Location = new System.Drawing.Point(20, 312);
+            this.chkIntercept.Name = "chkIntercept";
+            this.chkIntercept.Size = new System.Drawing.Size(182, 17);
+            this.chkIntercept.TabIndex = 110;
+            this.chkIntercept.Text = "Regression with an intercept only";
+            this.chkIntercept.UseVisualStyleBackColor = true;
+            this.chkIntercept.CheckedChanged += new System.EventHandler(this.chkIntercept_CheckedChanged);
+            // 
             // frmGLM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(598, 336);
+            this.Controls.Add(this.chkIntercept);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.grbSave);
             this.Controls.Add(this.cboNormalization);
@@ -366,6 +380,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cboTargetLayer);
             this.Controls.Add(this.btnCancel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmGLM";
@@ -409,5 +424,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cboTargetLayer;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.CheckBox chkIntercept;
     }
 }

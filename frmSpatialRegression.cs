@@ -207,7 +207,7 @@ namespace ESFTool
                         "Please choose at least one input variable");
                     return;
                 }
-                if (lstIndeVar.Items.Count == 0)
+                if (lstIndeVar.Items.Count == 0 &&chkIntercept.Checked == false)
                 {
                     MessageBox.Show("Please select independents input variables to be used in the regression model.",
                         "Please choose at least one input variable");
@@ -216,12 +216,6 @@ namespace ESFTool
                 if (cboFieldName.Text == "")
                 {
                     MessageBox.Show("Please select the dependent input variables to be used in the regression model.",
-                        "Please choose at least one input variable");
-                    return;
-                }
-                if (lstIndeVar.Items.Count == 0)
-                {
-                    MessageBox.Show("Please select independents input variables to be used in the regression model.",
                         "Please choose at least one input variable");
                     return;
                 }
@@ -237,6 +231,10 @@ namespace ESFTool
 
                 //Get number of Independent variables            
                 int nIDepen = lstIndeVar.Items.Count;
+
+                if (chkIntercept.Checked)
+                    nIDepen = 0;
+
                 // Gets the column of the dependent variable
                 String dependentName = (string)cboFieldName.SelectedItem;
                 //sourceTable.AcceptChanges();
@@ -321,15 +319,19 @@ namespace ESFTool
                 else
                     plotCommmand.Append("spautolm(" + dependentName + "~");
 
-
-                for (int j = 0; j < nIDepen; j++)
+                if (chkIntercept.Checked == false)
                 {
-                    //double[] arrVector = arrInDepen.GetColumn<double>(j);
-                    NumericVector vecIndepen = m_pEngine.CreateNumericVector(arrInDepen[j]);
-                    m_pEngine.SetSymbol(independentNames[j], vecIndepen);
-                    plotCommmand.Append(independentNames[j] + "+");
+                    for (int j = 0; j < nIDepen; j++)
+                    {
+                        //double[] arrVector = arrInDepen.GetColumn<double>(j);
+                        NumericVector vecIndepen = m_pEngine.CreateNumericVector(arrInDepen[j]);
+                        m_pEngine.SetSymbol(independentNames[j], vecIndepen);
+                        plotCommmand.Append(independentNames[j] + "+");
+                    }
+                    plotCommmand.Remove(plotCommmand.Length - 1, 1);
                 }
-                plotCommmand.Remove(plotCommmand.Length - 1, 1);
+                else
+                    plotCommmand.Append("1");
 
                 //Select Method
                 if (rbtEigen.Checked)
@@ -825,6 +827,24 @@ namespace ESFTool
             }
             else
                 lstSave.Enabled = false;
+        }
+
+        private void chkIntercept_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkIntercept.Checked)
+            {
+                lstFields.Enabled = false;
+                lstIndeVar.Enabled = false;
+                btnMoveLeft.Enabled = false;
+                btnMoveRight.Enabled = false;
+            }
+            else
+            {
+                lstFields.Enabled = false;
+                lstIndeVar.Enabled = false;
+                btnMoveLeft.Enabled = false;
+                btnMoveRight.Enabled = false;
+            }
         }
     }
 }

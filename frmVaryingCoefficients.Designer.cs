@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmVaryingCoefficients));
             this.ofdOpenSWM = new System.Windows.Forms.OpenFileDialog();
             this.btnOpenSWM = new System.Windows.Forms.Button();
             this.txtSWM = new System.Windows.Forms.TextBox();
@@ -411,8 +412,9 @@
             this.Controls.Add(this.lstFields);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cboTargetLayer);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmVaryingCoefficients";
-            this.Text = "frmVaryingCoefficients";
+            this.Text = "Spatially Varying Coefficients";
             this.grbSave.ResumeLayout(false);
             this.grbEV.ResumeLayout(false);
             this.grbEV.PerformLayout();

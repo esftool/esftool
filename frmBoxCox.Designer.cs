@@ -35,6 +35,7 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmBoxCox));
             this.exportToImageFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chkGamma = new System.Windows.Forms.CheckBox();
             this.btnTrans = new System.Windows.Forms.Button();
@@ -445,6 +446,7 @@
             this.Controls.Add(this.pQQPlot);
             this.Controls.Add(this.pHistogram);
             this.Controls.Add(this.panel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmBoxCox";

@@ -305,7 +305,7 @@ namespace ESFTool
                         "Please choose at least one input variable");
                     return;
                 }
-                if (lstIndeVar.Items.Count == 0)
+                if (lstIndeVar.Items.Count == 0 && chkIntercept.Checked == false)
                 {
                     MessageBox.Show("Please select independents input variables to be used in the regression model.",
                         "Please choose at least one input variable");
@@ -326,6 +326,9 @@ namespace ESFTool
 
                 //Get number of Independent variables            
                 int nIDepen = lstIndeVar.Items.Count;
+                if (chkIntercept.Checked)
+                    nIDepen = 0;
+
                 // Gets the column of the dependent variable
                 String dependentName = (string)cboFieldName.SelectedItem;
                 string strNoramlName = cboNormalization.Text;
@@ -429,13 +432,20 @@ namespace ESFTool
                 else
                     plotCommmand.Append(dependentName + "~");
 
-                for (int j = 0; j < nIDepen; j++)
+                //Add independet variables
+                if (chkIntercept.Checked == false)
                 {
-                    NumericVector vecIndepen = m_pEngine.CreateNumericVector(arrInDepen[j]);
-                    m_pEngine.SetSymbol(independentNames[j], vecIndepen);
-                    plotCommmand.Append(independentNames[j] + "+");
+                    for (int j = 0; j < nIDepen; j++)
+                    {
+                        NumericVector vecIndepen = m_pEngine.CreateNumericVector(arrInDepen[j]);
+                        m_pEngine.SetSymbol(independentNames[j], vecIndepen);
+                        plotCommmand.Append(independentNames[j] + "+");
+                    }
+                    plotCommmand.Remove(plotCommmand.Length - 1, 1);
                 }
-                plotCommmand.Remove(plotCommmand.Length - 1, 1);
+                else
+                    plotCommmand.Append("1");
+
 
                 if (cboFamily.Text == "Poisson")
                 {
@@ -912,6 +922,24 @@ namespace ESFTool
         private void lstIndeVar_DoubleClick(object sender, EventArgs e)
         {
             m_pSnippet.MoveSelectedItemsinListBoxtoOtherListBox(lstIndeVar, lstFields);
+        }
+
+        private void chkIntercept_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkIntercept.Checked)
+            {
+                lstFields.Enabled = false;
+                lstIndeVar.Enabled = false;
+                btnMoveLeft.Enabled = false;
+                btnMoveRight.Enabled = false;
+            }
+            else
+            {
+                lstFields.Enabled = false;
+                lstIndeVar.Enabled = false;
+                btnMoveLeft.Enabled = false;
+                btnMoveRight.Enabled = false;
+            }
         }
     }
 }

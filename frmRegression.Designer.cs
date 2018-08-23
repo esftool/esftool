@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "Residuals",
             "lin_resi"}, -1);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRegression));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.chkResiAuto = new System.Windows.Forms.CheckBox();
             this.btnOpenSWM = new System.Windows.Forms.Button();
@@ -54,6 +55,7 @@
             this.lstIndeVar = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cboTargetLayer = new System.Windows.Forms.ComboBox();
+            this.chkIntercept = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.grbSave.SuspendLayout();
             this.SuspendLayout();
@@ -64,7 +66,7 @@
             this.groupBox1.Controls.Add(this.btnOpenSWM);
             this.groupBox1.Controls.Add(this.txtSWM);
             this.groupBox1.Controls.Add(this.lblSWM);
-            this.groupBox1.Location = new System.Drawing.Point(20, 270);
+            this.groupBox1.Location = new System.Drawing.Point(305, 17);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(261, 90);
             this.groupBox1.TabIndex = 105;
@@ -140,7 +142,7 @@
             this.lstSave.Enabled = false;
             this.lstSave.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lstSave.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem11});
+            listViewItem1});
             this.lstSave.LabelEdit = true;
             this.lstSave.Location = new System.Drawing.Point(12, 42);
             this.lstSave.Name = "lstSave";
@@ -153,7 +155,7 @@
             // 
             this.grbSave.Controls.Add(this.lstSave);
             this.grbSave.Controls.Add(this.chkSave);
-            this.grbSave.Location = new System.Drawing.Point(19, 364);
+            this.grbSave.Location = new System.Drawing.Point(305, 140);
             this.grbSave.Name = "grbSave";
             this.grbSave.Size = new System.Drawing.Size(264, 111);
             this.grbSave.TabIndex = 104;
@@ -163,7 +165,7 @@
             // chkPlots
             // 
             this.chkPlots.AutoSize = true;
-            this.chkPlots.Location = new System.Drawing.Point(19, 250);
+            this.chkPlots.Location = new System.Drawing.Point(317, 117);
             this.chkPlots.Name = "chkPlots";
             this.chkPlots.Size = new System.Drawing.Size(137, 17);
             this.chkPlots.TabIndex = 103;
@@ -172,7 +174,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(166, 483);
+            this.btnCancel.Location = new System.Drawing.Point(452, 259);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(115, 23);
             this.btnCancel.TabIndex = 102;
@@ -182,7 +184,7 @@
             // 
             // btnRun
             // 
-            this.btnRun.Location = new System.Drawing.Point(20, 483);
+            this.btnRun.Location = new System.Drawing.Point(306, 259);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(115, 23);
             this.btnRun.TabIndex = 101;
@@ -211,7 +213,7 @@
             // cboFieldName
             // 
             this.cboFieldName.FormattingEnabled = true;
-            this.cboFieldName.Location = new System.Drawing.Point(19, 65);
+            this.cboFieldName.Location = new System.Drawing.Point(18, 65);
             this.cboFieldName.Name = "cboFieldName";
             this.cboFieldName.Size = new System.Drawing.Size(265, 21);
             this.cboFieldName.TabIndex = 98;
@@ -248,10 +250,10 @@
             // lstFields
             // 
             this.lstFields.FormattingEnabled = true;
-            this.lstFields.Location = new System.Drawing.Point(18, 119);
+            this.lstFields.Location = new System.Drawing.Point(18, 122);
             this.lstFields.Name = "lstFields";
             this.lstFields.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lstFields.Size = new System.Drawing.Size(113, 121);
+            this.lstFields.Size = new System.Drawing.Size(113, 134);
             this.lstFields.TabIndex = 94;
             this.lstFields.DoubleClick += new System.EventHandler(this.lstFields_DoubleClick);
             // 
@@ -261,14 +263,14 @@
             this.lstIndeVar.Location = new System.Drawing.Point(171, 122);
             this.lstIndeVar.Name = "lstIndeVar";
             this.lstIndeVar.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lstIndeVar.Size = new System.Drawing.Size(113, 121);
+            this.lstIndeVar.Size = new System.Drawing.Size(113, 134);
             this.lstIndeVar.TabIndex = 93;
             this.lstIndeVar.DoubleClick += new System.EventHandler(this.lstIndeVar_DoubleClick);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(17, 9);
+            this.label1.Location = new System.Drawing.Point(19, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(112, 13);
             this.label1.TabIndex = 92;
@@ -283,12 +285,24 @@
             this.cboTargetLayer.TabIndex = 91;
             this.cboTargetLayer.SelectedIndexChanged += new System.EventHandler(this.cboTargetLayer_SelectedIndexChanged);
             // 
+            // chkIntercept
+            // 
+            this.chkIntercept.AutoSize = true;
+            this.chkIntercept.Location = new System.Drawing.Point(19, 262);
+            this.chkIntercept.Name = "chkIntercept";
+            this.chkIntercept.Size = new System.Drawing.Size(182, 17);
+            this.chkIntercept.TabIndex = 111;
+            this.chkIntercept.Text = "Regression with an intercept only";
+            this.chkIntercept.UseVisualStyleBackColor = true;
+            this.chkIntercept.CheckedChanged += new System.EventHandler(this.chkIntercept_CheckedChanged);
+            // 
             // frmRegression
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(300, 515);
+            this.ClientSize = new System.Drawing.Size(613, 293);
+            this.Controls.Add(this.chkIntercept);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.grbSave);
             this.Controls.Add(this.chkPlots);
@@ -304,6 +318,7 @@
             this.Controls.Add(this.lstIndeVar);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cboTargetLayer);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmRegression";
@@ -342,5 +357,6 @@
         private System.Windows.Forms.ListBox lstIndeVar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cboTargetLayer;
+        private System.Windows.Forms.CheckBox chkIntercept;
     }
 }

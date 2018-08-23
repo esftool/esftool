@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAdvSWM));
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnApply = new System.Windows.Forms.Button();
             this.chkCumulate = new System.Windows.Forms.CheckBox();
@@ -176,6 +177,7 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.btnSubset);
             this.Controls.Add(this.btnOpenSWM);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmAdvSWM";
