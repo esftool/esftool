@@ -1,0 +1,4 @@
+1.0.3 Update (04/26/2019)
+
+: Added functions (Add field, Delete field, Field calcultor, and Moran scatterplot)
+: Matching the functionalities of the tools in ESF tool to those of SAAR v.1.0.6

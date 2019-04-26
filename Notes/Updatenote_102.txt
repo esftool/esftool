@@ -1,0 +1,20 @@
+1.0.2 Update (08/28/2018)
+
+Linear Regression tool
+: Added the option for an only-intercept model
+
+GLM Tool
+: Added the option for an only-intercept model
+: Allowed to add ratio and binary variable as a dependent variable for binomial regression
+
+Spatial Autoregression
+: Added the option for an only-intercept model
+
+ESF Tool
+: Added the option for an only-intercept model
+: Allowed to add ratio and binary variable as a dependent variable for binomial ESF
+
+Spatially varying coefficients
+: Added the tool for spatially varying coefficients
+ 
+ 
