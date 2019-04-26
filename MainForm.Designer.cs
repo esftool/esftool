@@ -39,6 +39,7 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearLayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutTheToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataTransformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,6 +67,12 @@
             this.identify = new System.Windows.Forms.ToolStripButton();
             this.Pointer = new System.Windows.Forms.ToolStripButton();
             this.ViewAttributeTable = new System.Windows.Forms.ToolStripButton();
+            this.exploreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moranScatterPlotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addFieldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteFieldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fieldCalculatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.spatialDockManager1)).BeginInit();
             this.spatialDockManager1.Panel1.SuspendLayout();
             this.spatialDockManager1.Panel2.SuspendLayout();
@@ -176,6 +183,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.dataToolStripMenuItem,
+            this.exploreToolStripMenuItem,
             this.regressionToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -188,6 +196,7 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addToolStripMenuItem,
             this.clearLayerToolStripMenuItem,
+            this.aboutTheToolToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -196,36 +205,47 @@
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.addToolStripMenuItem.Text = "Add Shapefiles";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
             // clearLayerToolStripMenuItem
             // 
             this.clearLayerToolStripMenuItem.Name = "clearLayerToolStripMenuItem";
-            this.clearLayerToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.clearLayerToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.clearLayerToolStripMenuItem.Text = "Clear All Layers";
             this.clearLayerToolStripMenuItem.Click += new System.EventHandler(this.clearLayerToolStripMenuItem_Click);
+            // 
+            // aboutTheToolToolStripMenuItem
+            // 
+            this.aboutTheToolToolStripMenuItem.Name = "aboutTheToolToolStripMenuItem";
+            this.aboutTheToolToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.aboutTheToolToolStripMenuItem.Text = "About ESF tool";
+            this.aboutTheToolToolStripMenuItem.Click += new System.EventHandler(this.aboutTheToolToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // dataToolStripMenuItem
             // 
             this.dataToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addFieldToolStripMenuItem,
+            this.deleteFieldToolStripMenuItem,
+            this.fieldCalculatorToolStripMenuItem,
+            this.toolStripSeparator3,
             this.dataTransformationToolStripMenuItem});
             this.dataToolStripMenuItem.Name = "dataToolStripMenuItem";
-            this.dataToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+            this.dataToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.dataToolStripMenuItem.Text = "Data";
             // 
             // dataTransformationToolStripMenuItem
             // 
             this.dataTransformationToolStripMenuItem.Name = "dataTransformationToolStripMenuItem";
-            this.dataTransformationToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.dataTransformationToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.dataTransformationToolStripMenuItem.Text = "Data Transformation";
             this.dataTransformationToolStripMenuItem.Click += new System.EventHandler(this.dataTransformationToolStripMenuItem_Click);
             // 
@@ -244,35 +264,35 @@
             // linearRegressionToolStripMenuItem
             // 
             this.linearRegressionToolStripMenuItem.Name = "linearRegressionToolStripMenuItem";
-            this.linearRegressionToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.linearRegressionToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.linearRegressionToolStripMenuItem.Text = "Linear Regression";
             this.linearRegressionToolStripMenuItem.Click += new System.EventHandler(this.linearRegressionToolStripMenuItem_Click);
             // 
             // generalizedLinearModelsToolStripMenuItem
             // 
             this.generalizedLinearModelsToolStripMenuItem.Name = "generalizedLinearModelsToolStripMenuItem";
-            this.generalizedLinearModelsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.generalizedLinearModelsToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.generalizedLinearModelsToolStripMenuItem.Text = "Generalized Linear Models";
             this.generalizedLinearModelsToolStripMenuItem.Click += new System.EventHandler(this.generalizedLinearModelsToolStripMenuItem_Click);
             // 
             // spatialAutoregressionToolStripMenuItem
             // 
             this.spatialAutoregressionToolStripMenuItem.Name = "spatialAutoregressionToolStripMenuItem";
-            this.spatialAutoregressionToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.spatialAutoregressionToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.spatialAutoregressionToolStripMenuItem.Text = "Spatial Autoregression";
             this.spatialAutoregressionToolStripMenuItem.Click += new System.EventHandler(this.spatialAutoregressionToolStripMenuItem_Click);
             // 
             // eigenvectorSpatialFilteringToolStripMenuItem
             // 
             this.eigenvectorSpatialFilteringToolStripMenuItem.Name = "eigenvectorSpatialFilteringToolStripMenuItem";
-            this.eigenvectorSpatialFilteringToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.eigenvectorSpatialFilteringToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.eigenvectorSpatialFilteringToolStripMenuItem.Text = "Eigenvector Spatial Filtering";
             this.eigenvectorSpatialFilteringToolStripMenuItem.Click += new System.EventHandler(this.eigenvectorSpatialFilteringToolStripMenuItem_Click);
             // 
             // spatiallyVaryingCoefficientsToolStripMenuItem
             // 
             this.spatiallyVaryingCoefficientsToolStripMenuItem.Name = "spatiallyVaryingCoefficientsToolStripMenuItem";
-            this.spatiallyVaryingCoefficientsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.spatiallyVaryingCoefficientsToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.spatiallyVaryingCoefficientsToolStripMenuItem.Text = "Spatially Varying Coefficients";
             this.spatiallyVaryingCoefficientsToolStripMenuItem.Click += new System.EventHandler(this.spatiallyVaryingCoefficientsToolStripMenuItem_Click);
             // 
@@ -467,6 +487,47 @@
             this.ViewAttributeTable.Text = "View AttributeTable";
             this.ViewAttributeTable.Click += new System.EventHandler(this.ViewAttributeTable_Click);
             // 
+            // exploreToolStripMenuItem
+            // 
+            this.exploreToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.moranScatterPlotToolStripMenuItem});
+            this.exploreToolStripMenuItem.Name = "exploreToolStripMenuItem";
+            this.exploreToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
+            this.exploreToolStripMenuItem.Text = "Explore";
+            // 
+            // moranScatterPlotToolStripMenuItem
+            // 
+            this.moranScatterPlotToolStripMenuItem.Name = "moranScatterPlotToolStripMenuItem";
+            this.moranScatterPlotToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.moranScatterPlotToolStripMenuItem.Text = "Moran Scatterplot";
+            this.moranScatterPlotToolStripMenuItem.Click += new System.EventHandler(this.moranScatterPlotToolStripMenuItem_Click);
+            // 
+            // addFieldToolStripMenuItem
+            // 
+            this.addFieldToolStripMenuItem.Name = "addFieldToolStripMenuItem";
+            this.addFieldToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.addFieldToolStripMenuItem.Text = "Add Field";
+            this.addFieldToolStripMenuItem.Click += new System.EventHandler(this.addFieldToolStripMenuItem_Click);
+            // 
+            // deleteFieldToolStripMenuItem
+            // 
+            this.deleteFieldToolStripMenuItem.Name = "deleteFieldToolStripMenuItem";
+            this.deleteFieldToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.deleteFieldToolStripMenuItem.Text = "Delete Field";
+            this.deleteFieldToolStripMenuItem.Click += new System.EventHandler(this.deleteFieldToolStripMenuItem_Click);
+            // 
+            // fieldCalculatorToolStripMenuItem
+            // 
+            this.fieldCalculatorToolStripMenuItem.Name = "fieldCalculatorToolStripMenuItem";
+            this.fieldCalculatorToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.fieldCalculatorToolStripMenuItem.Text = "Field Calculator";
+            this.fieldCalculatorToolStripMenuItem.Click += new System.EventHandler(this.fieldCalculatorToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(181, 6);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -535,6 +596,13 @@
         private System.Windows.Forms.ToolStripMenuItem dataTransformationToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton ViewAttributeTable;
         private System.Windows.Forms.ToolStripMenuItem spatiallyVaryingCoefficientsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutTheToolToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exploreToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem moranScatterPlotToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addFieldToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteFieldToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fieldCalculatorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }
 

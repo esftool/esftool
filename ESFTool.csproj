@@ -112,6 +112,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="clsSnippet.cs" />
+    <Compile Include="frmAboutESFTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAboutESFTool.Designer.cs">
+      <DependentUpon>frmAboutESFTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmAddField.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAddField.Designer.cs">
+      <DependentUpon>frmAddField.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmAttributeTable.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,17 +136,47 @@
     <Compile Include="frmBoxCox.Designer.cs">
       <DependentUpon>frmBoxCox.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmDeleteField.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDeleteField.Designer.cs">
+      <DependentUpon>frmDeleteField.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmErrorLog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmErrorLog.Designer.cs">
       <DependentUpon>frmErrorLog.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmESFResult.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmESFResult.Designer.cs">
+      <DependentUpon>frmESFResult.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmFieldCalculator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmFieldCalculator.Designer.cs">
+      <DependentUpon>frmFieldCalculator.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmGLM.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmGLM.Designer.cs">
       <DependentUpon>frmGLM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMScatterplot.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMScatterplot.Designer.cs">
+      <DependentUpon>frmMScatterplot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMScatterResults.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMScatterResults.Designer.cs">
+      <DependentUpon>frmMScatterResults.cs</DependentUpon>
     </Compile>
     <Compile Include="frmPlot.cs">
       <SubType>Form</SubType>
@@ -153,6 +195,12 @@
     </Compile>
     <Compile Include="frmRegression.Designer.cs">
       <DependentUpon>frmRegression.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSaveESF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSaveESF.Designer.cs">
+      <DependentUpon>frmSaveESF.cs</DependentUpon>
     </Compile>
     <Compile Include="frmSpatialRegression.cs">
       <SubType>Form</SubType>
@@ -204,17 +252,38 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmAboutESFTool.resx">
+      <DependentUpon>frmAboutESFTool.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAddField.resx">
+      <DependentUpon>frmAddField.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmAttributeTable.resx">
       <DependentUpon>frmAttributeTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmBoxCox.resx">
       <DependentUpon>frmBoxCox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmDeleteField.resx">
+      <DependentUpon>frmDeleteField.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmErrorLog.resx">
       <DependentUpon>frmErrorLog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmESFResult.resx">
+      <DependentUpon>frmESFResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmFieldCalculator.resx">
+      <DependentUpon>frmFieldCalculator.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmGLM.resx">
       <DependentUpon>frmGLM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMScatterplot.resx">
+      <DependentUpon>frmMScatterplot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMScatterResults.resx">
+      <DependentUpon>frmMScatterResults.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPlot.resx">
       <DependentUpon>frmPlot.cs</DependentUpon>
@@ -224,6 +293,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmRegression.resx">
       <DependentUpon>frmRegression.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSaveESF.resx">
+      <DependentUpon>frmSaveESF.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmSpatialRegression.resx">
       <DependentUpon>frmSpatialRegression.cs</DependentUpon>

@@ -103,6 +103,10 @@ namespace ESFTool
 
                 if (chkSave.Checked)
                     UpdateListview(lstSave, m_dt);
+
+                //Add intercept in the listview for independent variables
+                lstIndeVar.Items.Add("Intercept");
+
             }
             catch (Exception ex)
             {
@@ -207,7 +211,7 @@ namespace ESFTool
                         "Please choose at least one input variable");
                     return;
                 }
-                if (lstIndeVar.Items.Count == 0 &&chkIntercept.Checked == false)
+                if (lstIndeVar.Items.Count == 0)
                 {
                     MessageBox.Show("Please select independents input variables to be used in the regression model.",
                         "Please choose at least one input variable");
@@ -229,11 +233,23 @@ namespace ESFTool
                 //Decimal places
                 int intDeciPlaces = 5;
 
-                //Get number of Independent variables            
-                int nIDepen = lstIndeVar.Items.Count;
+                //Get number of Independent variables 
+                int nIndevarlistCnt = lstIndeVar.Items.Count;
+                //Indicate an intercept only model (2) or a non-intercept model (1) or not (0)
+                int intInterceptModel = 1;
+                for (int j = 0; j < nIndevarlistCnt; j++)
+                {
+                    if ((string)lstIndeVar.Items[j] == "Intercept")
+                        intInterceptModel = 0;
+                }
+                if (nIndevarlistCnt == 1 && intInterceptModel == 0)
+                    intInterceptModel = 2;
 
-                if (chkIntercept.Checked)
-                    nIDepen = 0;
+                int nIDepen = 0;
+                if (intInterceptModel == 0)
+                    nIDepen = nIndevarlistCnt - 1;
+                else if (intInterceptModel == 1)
+                    nIDepen = nIndevarlistCnt;
 
                 // Gets the column of the dependent variable
                 String dependentName = (string)cboFieldName.SelectedItem;
@@ -242,12 +258,35 @@ namespace ESFTool
 
                 // Gets the columns of the independent variables
                 String[] independentNames = new string[nIDepen];
-                for (int j = 0; j < nIDepen; j++)
+                int intIdices = 0;
+                string strIndependentName = "";
+                for (int j = 0; j < nIndevarlistCnt; j++)
                 {
-                    independentNames[j] = (string)lstIndeVar.Items[j];
+                    strIndependentName = (string)lstIndeVar.Items[j];
+                    if (strIndependentName != "Intercept")
+                    {
+                        independentNames[intIdices] = strIndependentName;
+                        intIdices++;
+                    }
                 }
 
                 int nFeature = m_dt.Rows.Count;
+
+                //Warning for method
+                if (rbtEigen.Checked)
+                {
+                    if (nFeature > m_pForm.intWarningCount)
+                    {
+
+                        DialogResult dialogResult = MessageBox.Show("It might take a lot of time. Do you want to continue?", "Warning", MessageBoxButtons.YesNo);
+
+                        if (dialogResult == DialogResult.No)
+                        {
+                            pfrmProgress.Close();
+                            return;
+                        }
+                    }
+                }
 
                 //Get index for independent and dependent variables
                 int intDepenIdx = m_dt.Columns.IndexOf(dependentName);
@@ -319,7 +358,11 @@ namespace ESFTool
                 else
                     plotCommmand.Append("spautolm(" + dependentName + "~");
 
-                if (chkIntercept.Checked == false)
+                if (intInterceptModel == 2)
+                {
+                    plotCommmand.Append("1");
+                }
+                else
                 {
                     for (int j = 0; j < nIDepen; j++)
                     {
@@ -329,9 +372,10 @@ namespace ESFTool
                         plotCommmand.Append(independentNames[j] + "+");
                     }
                     plotCommmand.Remove(plotCommmand.Length - 1, 1);
+
+                    if (intInterceptModel == 1)
+                        plotCommmand.Append("-1");
                 }
-                else
-                    plotCommmand.Append("1");
 
                 //Select Method
                 if (rbtEigen.Checked)
@@ -404,9 +448,7 @@ namespace ESFTool
                     dblAIC = (2 * dblParaCnt) - (2 * dblLRErrorModel);
                 }
 
-                //int intNObser = pEngine.Evaluate("as.numeric(nrow(sum.lm$X))").AsInteger().First();
-                //int intNParmeter = pEngine.Evaluate(" as.numeric(sum.lm$parameters)").AsInteger().First();
-
+                
                 double dblLambda = 0;
                 double dblSELambda = 0;
                 double dblResiAuto = 0;
@@ -425,7 +467,17 @@ namespace ESFTool
                     dblLambda = m_pEngine.Evaluate("as.numeric(sum.lm$lambda)").AsNumeric().First();
                     dblSELambda = m_pEngine.Evaluate("as.numeric(sum.lm$lambda.se)").AsNumeric().First();
                 }
-                double dblRsquared = m_pEngine.Evaluate("as.numeric(sum.lm$NK)").AsNumeric().First();
+                double dblRsquared = 0;
+                //Previous method
+                //if(intInterceptModel != 1)
+                //    dblRsquared = m_pEngine.Evaluate("as.numeric(sum.lm$NK)").AsNumeric().First();
+
+                //New pseduo R squared calculation
+                if (rbtError.Checked || rbtLag.Checked || rbtDurbin.Checked)
+                    dblRsquared = m_pEngine.Evaluate("summary(lm(sum.lm$y~sum.lm$fitted.values))$r.squared").AsNumeric().First();
+                else
+                    dblRsquared = m_pEngine.Evaluate("summary(lm(sum.lm$Y~sum.lm$fit$fitted.values))$r.squared").AsNumeric().First();
+                
                 //Draw result form
 
                 //Open Ouput form
@@ -472,25 +524,37 @@ namespace ESFTool
                 dColPvT.ColumnName = "Pr(>|z|)";
                 tblRegResult.Columns.Add(dColPvT);
 
-                if (rbtDurbin.Checked)
-                    nIDepen = nIDepen * 2;
+                int intNCoeff = matCoe.RowCount;
 
                 //Store Data Table by R result
-                for (int j = 0; j < nIDepen + 1; j++)
+                for (int j = 0; j < intNCoeff; j++)
                 {
                     DataRow pDataRow = tblRegResult.NewRow();
-                    if (j == 0)
+                    if (j == 0 && intInterceptModel != 1)
                     {
                         pDataRow["Name"] = "(Intercept)";
+                    }
+                    else if (intInterceptModel == 1)
+                    {
+                        if (rbtDurbin.Checked)
+                        {
+                            if (j <= intNCoeff / 2)
+                                pDataRow["Name"] = independentNames[j];
+                            else
+                                pDataRow["Name"] = "lag." + independentNames[j - (intNCoeff / 2)];
+
+                        }
+                        else
+                            pDataRow["Name"] = independentNames[j];
                     }
                     else
                     {
                         if (rbtDurbin.Checked)
                         {
-                            if (j <= nIDepen / 2)
+                            if (j <= intNCoeff / 2)
                                 pDataRow["Name"] = independentNames[j - 1];
                             else
-                                pDataRow["Name"] = "lag." + independentNames[j - (nIDepen / 2) - 1];
+                                pDataRow["Name"] = "lag." + independentNames[j - (intNCoeff / 2) - 1];
 
                         }
                         else
@@ -513,34 +577,79 @@ namespace ESFTool
                 string[] strResults = new string[5];
                 if (rbtLag.Checked || rbtDurbin.Checked)
                 {
-                    strResults[0] = "rho: " + dblLambda.ToString(strDecimalPlaces) +
-                        ", LR Test Value: " + dblLRLambda.ToString(strDecimalPlaces) + ", p-value: " + dblpLambda.ToString(strDecimalPlaces);
-                    strResults[1] = "Asymptotic S.E: " + dblSELambda.ToString(strDecimalPlaces) +
+                    if (dblpLambda < 0.001)
+                        strResults[0] = "rho: " + dblLambda.ToString(strDecimalPlaces) +
+                                                ", LR Test Value: " + dblLRLambda.ToString(strDecimalPlaces) + ", p-value < 0.001";
+                    else if (dblpLambda > 0.999)
+                        strResults[0] = "rho: " + dblLambda.ToString(strDecimalPlaces) +
+                                                ", LR Test Value: " + dblLRLambda.ToString(strDecimalPlaces) + ", p-value > 0.999";
+                    else
+                        strResults[0] = "rho: " + dblLambda.ToString(strDecimalPlaces) +
+                                                ", LR Test Value: " + dblLRLambda.ToString(strDecimalPlaces) + ", p-value: " + dblpLambda.ToString(strDecimalPlaces);
+
+                    if (dblpWald < 0.001)
+                        strResults[1] = "Asymptotic S.E: " + dblSELambda.ToString(strDecimalPlaces) +
+                         ", Wald: " + dblWald.ToString(strDecimalPlaces) + ", p-value < 0.001";
+                    else if (dblpWald > 0.999)
+                        strResults[1] = "Asymptotic S.E: " + dblSELambda.ToString(strDecimalPlaces) +
+                        ", Wald: " + dblWald.ToString(strDecimalPlaces) + ", p-value > 0.999";
+                    else
+                        strResults[1] = "Asymptotic S.E: " + dblSELambda.ToString(strDecimalPlaces) +
                         ", Wald: " + dblWald.ToString(strDecimalPlaces) + ", p-value: " + dblpWald.ToString(strDecimalPlaces);
+
+
                     strResults[2] = "Log likelihood: " + dblLRErrorModel.ToString(strDecimalPlaces) +
                         ", Sigma-squared: " + dblSigmasquared.ToString(strDecimalPlaces);
                     strResults[3] = "AIC: " + dblAIC.ToString(strDecimalPlaces) + ", LM test for residuals autocorrelation: " + dblResiAuto.ToString(strDecimalPlaces);
                 }
                 else if (rbtError.Checked)
                 {
-                    strResults[0] = "Lambda: " + dblLambda.ToString(strDecimalPlaces) +
-                        ", LR Test Value: " + dblLRLambda.ToString(strDecimalPlaces) + ", p-value: " + dblpLambda.ToString(strDecimalPlaces);
-                    strResults[1] = "Asymptotic S.E: " + dblSELambda.ToString(strDecimalPlaces) +
+                    if (dblpLambda < 0.001)
+                        strResults[0] = "Lambda: " + dblLambda.ToString(strDecimalPlaces) +
+                                                ", LR Test Value: " + dblLRLambda.ToString(strDecimalPlaces) + ", p-value < 0.001";
+                    else if (dblpLambda > 0.999)
+                        strResults[0] = "Lambda: " + dblLambda.ToString(strDecimalPlaces) +
+                                                ", LR Test Value: " + dblLRLambda.ToString(strDecimalPlaces) + ", p-value > 0.999";
+                    else
+                        strResults[0] = "Lambda: " + dblLambda.ToString(strDecimalPlaces) +
+                                                ", LR Test Value: " + dblLRLambda.ToString(strDecimalPlaces) + ", p-value: " + dblpLambda.ToString(strDecimalPlaces);
+
+                    if (dblpWald < 0.001)
+                        strResults[1] = "Asymptotic S.E: " + dblSELambda.ToString(strDecimalPlaces) +
+                         ", Wald: " + dblWald.ToString(strDecimalPlaces) + ", p-value < 0.001";
+                    else if (dblpWald > 0.999)
+                        strResults[1] = "Asymptotic S.E: " + dblSELambda.ToString(strDecimalPlaces) +
+                        ", Wald: " + dblWald.ToString(strDecimalPlaces) + ", p-value > 0.999";
+                    else
+                        strResults[1] = "Asymptotic S.E: " + dblSELambda.ToString(strDecimalPlaces) +
                         ", Wald: " + dblWald.ToString(strDecimalPlaces) + ", p-value: " + dblpWald.ToString(strDecimalPlaces);
+
+                    //strResults[0] = "Lambda: " + dblLambda.ToString(strDecimalPlaces) +
+                    //    ", LR Test Value: " + dblLRLambda.ToString(strDecimalPlaces) + ", p-value: " + dblpLambda.ToString(strDecimalPlaces);
+                    //strResults[1] = "Asymptotic S.E: " + dblSELambda.ToString(strDecimalPlaces) +
+                    //    ", Wald: " + dblWald.ToString(strDecimalPlaces) + ", p-value: " + dblpWald.ToString(strDecimalPlaces);
                     strResults[2] = "Log likelihood: " + dblLRErrorModel.ToString(strDecimalPlaces) +
                         ", Sigma-squared: " + dblSigmasquared.ToString(strDecimalPlaces);
                     strResults[3] = "AIC: " + dblAIC.ToString(strDecimalPlaces);
                 }
                 else
                 {
-                    strResults[0] = "Lambda: " + dblLambda.ToString(strDecimalPlaces) +
-                        ", LR Test Value: " + dblLRLambda.ToString(strDecimalPlaces) + ", p-value: " + dblpLambda.ToString(strDecimalPlaces);
+                    if (dblpLambda < 0.001)
+                        strResults[0] = "Lambda: " + dblLambda.ToString(strDecimalPlaces) +
+                                                ", LR Test Value: " + dblLRLambda.ToString(strDecimalPlaces) + ", p-value < 0.001";
+                    else if (dblpLambda > 0.999)
+                        strResults[0] = "Lambda: " + dblLambda.ToString(strDecimalPlaces) +
+                                                ", LR Test Value: " + dblLRLambda.ToString(strDecimalPlaces) + ", p-value > 0.999";
+                    else
+                        strResults[0] = "Lambda: " + dblLambda.ToString(strDecimalPlaces) +
+                                                ", LR Test Value: " + dblLRLambda.ToString(strDecimalPlaces) + ", p-value: " + dblpLambda.ToString(strDecimalPlaces);
+
                     strResults[1] = "Numerical Hessian S.E of lambda: " + dblSELambda.ToString(strDecimalPlaces);
                     strResults[2] = "Log likelihood: " + dblLRErrorModel.ToString(strDecimalPlaces) +
                         ", Sigma-squared: " + dblSigmasquared.ToString(strDecimalPlaces);
                     strResults[3] = "AIC: " + dblAIC.ToString(strDecimalPlaces);
                 }
-                strResults[4] = "Nagelkerke pseudo-R-squared: " + dblRsquared.ToString(strDecimalPlaces);
+                strResults[4] = "Pseudo-R-squared: " + dblRsquared.ToString(strDecimalPlaces);
 
                 pfrmRegResult.txtOutput.Lines = strResults;
 
@@ -829,22 +938,5 @@ namespace ESFTool
                 lstSave.Enabled = false;
         }
 
-        private void chkIntercept_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkIntercept.Checked)
-            {
-                lstFields.Enabled = false;
-                lstIndeVar.Enabled = false;
-                btnMoveLeft.Enabled = false;
-                btnMoveRight.Enabled = false;
-            }
-            else
-            {
-                lstFields.Enabled = false;
-                lstIndeVar.Enabled = false;
-                btnMoveLeft.Enabled = false;
-                btnMoveRight.Enabled = false;
-            }
-        }
     }
 }

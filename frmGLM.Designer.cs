@@ -36,6 +36,8 @@
             this.btnOpenSWM = new System.Windows.Forms.Button();
             this.lblSWM = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cboAlternative = new System.Windows.Forms.ComboBox();
+            this.lblAlternative = new System.Windows.Forms.Label();
             this.txtSWM = new System.Windows.Forms.TextBox();
             this.chkSave = new System.Windows.Forms.CheckBox();
             this.colNames = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -60,7 +62,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cboTargetLayer = new System.Windows.Forms.ComboBox();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.chkIntercept = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.grbSave.SuspendLayout();
             this.SuspendLayout();
@@ -70,7 +71,7 @@
             this.chkResiAuto.AutoSize = true;
             this.chkResiAuto.Checked = true;
             this.chkResiAuto.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkResiAuto.Location = new System.Drawing.Point(12, 22);
+            this.chkResiAuto.Location = new System.Drawing.Point(12, 24);
             this.chkResiAuto.Name = "chkResiAuto";
             this.chkResiAuto.Size = new System.Drawing.Size(220, 17);
             this.chkResiAuto.TabIndex = 24;
@@ -80,7 +81,7 @@
             // 
             // btnOpenSWM
             // 
-            this.btnOpenSWM.Location = new System.Drawing.Point(226, 57);
+            this.btnOpenSWM.Location = new System.Drawing.Point(226, 70);
             this.btnOpenSWM.Name = "btnOpenSWM";
             this.btnOpenSWM.Size = new System.Drawing.Size(29, 23);
             this.btnOpenSWM.TabIndex = 89;
@@ -91,30 +92,53 @@
             // lblSWM
             // 
             this.lblSWM.AutoSize = true;
-            this.lblSWM.Location = new System.Drawing.Point(12, 44);
+            this.lblSWM.Location = new System.Drawing.Point(47, 52);
             this.lblSWM.Name = "lblSWM";
-            this.lblSWM.Size = new System.Drawing.Size(107, 13);
+            this.lblSWM.Size = new System.Drawing.Size(112, 13);
             this.lblSWM.TabIndex = 87;
-            this.lblSWM.Text = "Spatial Weight Matrix";
+            this.lblSWM.Text = "Spatial Weights Matrix";
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cboAlternative);
+            this.groupBox1.Controls.Add(this.lblAlternative);
             this.groupBox1.Controls.Add(this.chkResiAuto);
             this.groupBox1.Controls.Add(this.btnOpenSWM);
             this.groupBox1.Controls.Add(this.txtSWM);
             this.groupBox1.Controls.Add(this.lblSWM);
-            this.groupBox1.Location = new System.Drawing.Point(308, 53);
+            this.groupBox1.Location = new System.Drawing.Point(308, 36);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(274, 90);
+            this.groupBox1.Size = new System.Drawing.Size(274, 129);
             this.groupBox1.TabIndex = 109;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Residual analysis";
             // 
+            // cboAlternative
+            // 
+            this.cboAlternative.FormattingEnabled = true;
+            this.cboAlternative.Items.AddRange(new object[] {
+            "Greater",
+            "Less"});
+            this.cboAlternative.Location = new System.Drawing.Point(168, 97);
+            this.cboAlternative.Name = "cboAlternative";
+            this.cboAlternative.Size = new System.Drawing.Size(86, 21);
+            this.cboAlternative.TabIndex = 96;
+            this.cboAlternative.Text = "Greater";
+            // 
+            // lblAlternative
+            // 
+            this.lblAlternative.AutoSize = true;
+            this.lblAlternative.Location = new System.Drawing.Point(47, 101);
+            this.lblAlternative.Name = "lblAlternative";
+            this.lblAlternative.Size = new System.Drawing.Size(115, 13);
+            this.lblAlternative.TabIndex = 95;
+            this.lblAlternative.Text = "Alternative Hypothesis:";
+            // 
             // txtSWM
             // 
-            this.txtSWM.Location = new System.Drawing.Point(12, 60);
+            this.txtSWM.Location = new System.Drawing.Point(47, 71);
             this.txtSWM.Name = "txtSWM";
-            this.txtSWM.Size = new System.Drawing.Size(208, 20);
+            this.txtSWM.Size = new System.Drawing.Size(173, 20);
             this.txtSWM.TabIndex = 88;
             this.txtSWM.Text = "Default";
             // 
@@ -143,7 +167,7 @@
             // 
             this.lblType.AutoSize = true;
             this.lblType.Enabled = false;
-            this.lblType.Location = new System.Drawing.Point(13, 41);
+            this.lblType.Location = new System.Drawing.Point(13, 45);
             this.lblType.Name = "lblType";
             this.lblType.Size = new System.Drawing.Size(34, 13);
             this.lblType.TabIndex = 59;
@@ -156,7 +180,7 @@
             this.cboResiType.Items.AddRange(new object[] {
             "deviance",
             "pearson"});
-            this.cboResiType.Location = new System.Drawing.Point(61, 37);
+            this.cboResiType.Location = new System.Drawing.Point(61, 41);
             this.cboResiType.Name = "cboResiType";
             this.cboResiType.Size = new System.Drawing.Size(194, 21);
             this.cboResiType.TabIndex = 58;
@@ -172,7 +196,7 @@
             this.lstSave.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1});
             this.lstSave.LabelEdit = true;
-            this.lstSave.Location = new System.Drawing.Point(12, 64);
+            this.lstSave.Location = new System.Drawing.Point(12, 73);
             this.lstSave.Name = "lstSave";
             this.lstSave.Size = new System.Drawing.Size(244, 55);
             this.lstSave.TabIndex = 57;
@@ -185,9 +209,9 @@
             this.grbSave.Controls.Add(this.cboResiType);
             this.grbSave.Controls.Add(this.lstSave);
             this.grbSave.Controls.Add(this.chkSave);
-            this.grbSave.Location = new System.Drawing.Point(308, 153);
+            this.grbSave.Location = new System.Drawing.Point(308, 174);
             this.grbSave.Name = "grbSave";
-            this.grbSave.Size = new System.Drawing.Size(274, 130);
+            this.grbSave.Size = new System.Drawing.Size(274, 142);
             this.grbSave.TabIndex = 108;
             this.grbSave.TabStop = false;
             this.grbSave.Text = "Save";
@@ -199,6 +223,7 @@
             this.cboNormalization.Name = "cboNormalization";
             this.cboNormalization.Size = new System.Drawing.Size(265, 21);
             this.cboNormalization.TabIndex = 107;
+            this.cboNormalization.SelectedIndexChanged += new System.EventHandler(this.cboNormalization_SelectedIndexChanged);
             // 
             // lblNorm
             // 
@@ -214,7 +239,9 @@
             this.cboFamily.FormattingEnabled = true;
             this.cboFamily.Items.AddRange(new object[] {
             "Poisson",
-            "Binomial"});
+            "Negative Binomial",
+            "Binomial",
+            "Logistic"});
             this.cboFamily.Location = new System.Drawing.Point(17, 64);
             this.cboFamily.Name = "cboFamily";
             this.cboFamily.Size = new System.Drawing.Size(265, 21);
@@ -233,7 +260,7 @@
             // 
             // btnRun
             // 
-            this.btnRun.Location = new System.Drawing.Point(308, 304);
+            this.btnRun.Location = new System.Drawing.Point(308, 322);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(115, 23);
             this.btnRun.TabIndex = 102;
@@ -302,7 +329,7 @@
             this.lstFields.Location = new System.Drawing.Point(18, 197);
             this.lstFields.Name = "lstFields";
             this.lstFields.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lstFields.Size = new System.Drawing.Size(113, 108);
+            this.lstFields.Size = new System.Drawing.Size(113, 147);
             this.lstFields.TabIndex = 95;
             this.lstFields.DoubleClick += new System.EventHandler(this.lstFields_DoubleClick);
             // 
@@ -312,7 +339,7 @@
             this.lstIndeVar.Location = new System.Drawing.Point(171, 200);
             this.lstIndeVar.Name = "lstIndeVar";
             this.lstIndeVar.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lstIndeVar.Size = new System.Drawing.Size(113, 108);
+            this.lstIndeVar.Size = new System.Drawing.Size(113, 147);
             this.lstIndeVar.TabIndex = 94;
             this.lstIndeVar.DoubleClick += new System.EventHandler(this.lstIndeVar_DoubleClick);
             // 
@@ -336,7 +363,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(467, 304);
+            this.btnCancel.Location = new System.Drawing.Point(467, 322);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(115, 23);
             this.btnCancel.TabIndex = 103;
@@ -344,24 +371,12 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // chkIntercept
-            // 
-            this.chkIntercept.AutoSize = true;
-            this.chkIntercept.Location = new System.Drawing.Point(20, 312);
-            this.chkIntercept.Name = "chkIntercept";
-            this.chkIntercept.Size = new System.Drawing.Size(182, 17);
-            this.chkIntercept.TabIndex = 110;
-            this.chkIntercept.Text = "Regression with an intercept only";
-            this.chkIntercept.UseVisualStyleBackColor = true;
-            this.chkIntercept.CheckedChanged += new System.EventHandler(this.chkIntercept_CheckedChanged);
-            // 
             // frmGLM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(598, 336);
-            this.Controls.Add(this.chkIntercept);
+            this.ClientSize = new System.Drawing.Size(598, 359);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.grbSave);
             this.Controls.Add(this.cboNormalization);
@@ -424,6 +439,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cboTargetLayer;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.CheckBox chkIntercept;
+        private System.Windows.Forms.ComboBox cboAlternative;
+        private System.Windows.Forms.Label lblAlternative;
     }
 }

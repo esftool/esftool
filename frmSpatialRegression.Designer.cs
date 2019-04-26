@@ -66,7 +66,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cboTargetLayer = new System.Windows.Forms.ComboBox();
             this.lstIndeVar = new System.Windows.Forms.ListBox();
-            this.chkIntercept = new System.Windows.Forms.CheckBox();
             this.grbModels.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -315,9 +314,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(12, 95);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(107, 13);
+            this.label5.Size = new System.Drawing.Size(112, 13);
             this.label5.TabIndex = 84;
-            this.label5.Text = "Spatial Weight Matrix";
+            this.label5.Text = "Spatial Weights Matrix";
             // 
             // btnRun
             // 
@@ -366,7 +365,7 @@
             // 
             // btnMoveLeft
             // 
-            this.btnMoveLeft.Location = new System.Drawing.Point(134, 235);
+            this.btnMoveLeft.Location = new System.Drawing.Point(134, 261);
             this.btnMoveLeft.Name = "btnMoveLeft";
             this.btnMoveLeft.Size = new System.Drawing.Size(28, 23);
             this.btnMoveLeft.TabIndex = 77;
@@ -376,7 +375,7 @@
             // 
             // btnMoveRight
             // 
-            this.btnMoveRight.Location = new System.Drawing.Point(134, 206);
+            this.btnMoveRight.Location = new System.Drawing.Point(134, 232);
             this.btnMoveRight.Name = "btnMoveRight";
             this.btnMoveRight.Size = new System.Drawing.Size(28, 23);
             this.btnMoveRight.TabIndex = 76;
@@ -390,7 +389,7 @@
             this.lstFields.Location = new System.Drawing.Point(15, 165);
             this.lstFields.Name = "lstFields";
             this.lstFields.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lstFields.Size = new System.Drawing.Size(113, 160);
+            this.lstFields.Size = new System.Drawing.Size(113, 186);
             this.lstFields.TabIndex = 75;
             this.lstFields.DoubleClick += new System.EventHandler(this.lstFields_DoubleClick);
             // 
@@ -418,20 +417,9 @@
             this.lstIndeVar.Location = new System.Drawing.Point(168, 165);
             this.lstIndeVar.Name = "lstIndeVar";
             this.lstIndeVar.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lstIndeVar.Size = new System.Drawing.Size(113, 160);
+            this.lstIndeVar.Size = new System.Drawing.Size(113, 186);
             this.lstIndeVar.TabIndex = 74;
             this.lstIndeVar.DoubleClick += new System.EventHandler(this.lstIndeVar_DoubleClick);
-            // 
-            // chkIntercept
-            // 
-            this.chkIntercept.AutoSize = true;
-            this.chkIntercept.Location = new System.Drawing.Point(15, 334);
-            this.chkIntercept.Name = "chkIntercept";
-            this.chkIntercept.Size = new System.Drawing.Size(182, 17);
-            this.chkIntercept.TabIndex = 112;
-            this.chkIntercept.Text = "Regression with an intercept only";
-            this.chkIntercept.UseVisualStyleBackColor = true;
-            this.chkIntercept.CheckedChanged += new System.EventHandler(this.chkIntercept_CheckedChanged);
             // 
             // frmSpatialRegression
             // 
@@ -439,7 +427,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(595, 367);
-            this.Controls.Add(this.chkIntercept);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.grbSave);
             this.Controls.Add(this.btnOpenSWM);
@@ -510,6 +497,5 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cboTargetLayer;
         private System.Windows.Forms.ListBox lstIndeVar;
-        private System.Windows.Forms.CheckBox chkIntercept;
     }
 }

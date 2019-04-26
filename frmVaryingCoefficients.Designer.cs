@@ -60,9 +60,14 @@
             this.cboTargetLayer = new System.Windows.Forms.ComboBox();
             this.lstIndeVar = new System.Windows.Forms.CheckedListBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cboAlternative = new System.Windows.Forms.ComboBox();
+            this.lblAlternative = new System.Windows.Forms.Label();
             this.grbSave.SuspendLayout();
             this.grbEV.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudEValue)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // ofdOpenSWM
@@ -72,7 +77,7 @@
             // 
             // btnOpenSWM
             // 
-            this.btnOpenSWM.Location = new System.Drawing.Point(517, 41);
+            this.btnOpenSWM.Location = new System.Drawing.Point(517, 63);
             this.btnOpenSWM.Name = "btnOpenSWM";
             this.btnOpenSWM.Size = new System.Drawing.Size(39, 23);
             this.btnOpenSWM.TabIndex = 107;
@@ -82,7 +87,7 @@
             // 
             // txtSWM
             // 
-            this.txtSWM.Location = new System.Drawing.Point(308, 44);
+            this.txtSWM.Location = new System.Drawing.Point(308, 66);
             this.txtSWM.Name = "txtSWM";
             this.txtSWM.Size = new System.Drawing.Size(199, 20);
             this.txtSWM.TabIndex = 106;
@@ -91,11 +96,11 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(305, 26);
+            this.label6.Location = new System.Drawing.Point(305, 48);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(110, 13);
+            this.label6.Size = new System.Drawing.Size(115, 13);
             this.label6.TabIndex = 105;
-            this.label6.Text = "Spatial Weight Matrix:";
+            this.label6.Text = "Spatial Weights Matrix:";
             // 
             // cboNormalization
             // 
@@ -105,6 +110,7 @@
             this.cboNormalization.Name = "cboNormalization";
             this.cboNormalization.Size = new System.Drawing.Size(265, 21);
             this.cboNormalization.TabIndex = 104;
+            this.cboNormalization.SelectedIndexChanged += new System.EventHandler(this.cboNormalization_SelectedIndexChanged);
             // 
             // lblNorm
             // 
@@ -122,7 +128,9 @@
             this.cboFamily.Items.AddRange(new object[] {
             "Linear (Gaussian)",
             "Poisson",
-            "Binomial"});
+            "Negative Binomial",
+            "Binomial",
+            "Logistic"});
             this.cboFamily.Location = new System.Drawing.Point(15, 73);
             this.cboFamily.Name = "cboFamily";
             this.cboFamily.Size = new System.Drawing.Size(265, 21);
@@ -142,9 +150,9 @@
             // grbSave
             // 
             this.grbSave.Controls.Add(this.lstSave);
-            this.grbSave.Location = new System.Drawing.Point(300, 204);
+            this.grbSave.Location = new System.Drawing.Point(300, 266);
             this.grbSave.Name = "grbSave";
-            this.grbSave.Size = new System.Drawing.Size(264, 161);
+            this.grbSave.Size = new System.Drawing.Size(264, 166);
             this.grbSave.TabIndex = 100;
             this.grbSave.TabStop = false;
             this.grbSave.Text = "Result";
@@ -158,7 +166,7 @@
             this.lstSave.LabelEdit = true;
             this.lstSave.Location = new System.Drawing.Point(12, 19);
             this.lstSave.Name = "lstSave";
-            this.lstSave.Size = new System.Drawing.Size(244, 129);
+            this.lstSave.Size = new System.Drawing.Size(244, 141);
             this.lstSave.TabIndex = 57;
             this.lstSave.UseCompatibleStateImageBehavior = false;
             this.lstSave.View = System.Windows.Forms.View.Details;
@@ -177,7 +185,7 @@
             // chkCoeEVs
             // 
             this.chkCoeEVs.AutoSize = true;
-            this.chkCoeEVs.Location = new System.Drawing.Point(308, 178);
+            this.chkCoeEVs.Location = new System.Drawing.Point(14, 23);
             this.chkCoeEVs.Name = "chkCoeEVs";
             this.chkCoeEVs.Size = new System.Drawing.Size(229, 17);
             this.chkCoeEVs.TabIndex = 99;
@@ -190,9 +198,9 @@
             this.grbEV.Controls.Add(this.lblDirection);
             this.grbEV.Controls.Add(this.cboDirection);
             this.grbEV.Controls.Add(this.nudEValue);
-            this.grbEV.Location = new System.Drawing.Point(299, 85);
+            this.grbEV.Location = new System.Drawing.Point(299, 30);
             this.grbEV.Name = "grbEV";
-            this.grbEV.Size = new System.Drawing.Size(265, 79);
+            this.grbEV.Size = new System.Drawing.Size(265, 125);
             this.grbEV.TabIndex = 98;
             this.grbEV.TabStop = false;
             this.grbEV.Text = "Candidate Eigenvector Selection";
@@ -200,7 +208,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(14, 25);
+            this.label7.Location = new System.Drawing.Point(14, 67);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(158, 13);
             this.label7.TabIndex = 5;
@@ -209,8 +217,7 @@
             // lblDirection
             // 
             this.lblDirection.AutoSize = true;
-            this.lblDirection.Enabled = false;
-            this.lblDirection.Location = new System.Drawing.Point(74, 50);
+            this.lblDirection.Location = new System.Drawing.Point(74, 94);
             this.lblDirection.Name = "lblDirection";
             this.lblDirection.Size = new System.Drawing.Size(52, 13);
             this.lblDirection.TabIndex = 4;
@@ -218,13 +225,12 @@
             // 
             // cboDirection
             // 
-            this.cboDirection.Enabled = false;
             this.cboDirection.FormattingEnabled = true;
             this.cboDirection.Items.AddRange(new object[] {
             "Positive Only",
             "Negative Only",
             "Both"});
-            this.cboDirection.Location = new System.Drawing.Point(132, 47);
+            this.cboDirection.Location = new System.Drawing.Point(132, 91);
             this.cboDirection.Name = "cboDirection";
             this.cboDirection.Size = new System.Drawing.Size(125, 21);
             this.cboDirection.TabIndex = 3;
@@ -233,13 +239,12 @@
             // nudEValue
             // 
             this.nudEValue.DecimalPlaces = 2;
-            this.nudEValue.Enabled = false;
             this.nudEValue.Increment = new decimal(new int[] {
             5,
             0,
             0,
             131072});
-            this.nudEValue.Location = new System.Drawing.Point(178, 22);
+            this.nudEValue.Location = new System.Drawing.Point(178, 64);
             this.nudEValue.Maximum = new decimal(new int[] {
             1,
             0,
@@ -261,7 +266,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(448, 375);
+            this.btnCancel.Location = new System.Drawing.Point(448, 442);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(115, 23);
             this.btnCancel.TabIndex = 97;
@@ -271,7 +276,7 @@
             // 
             // btnRun
             // 
-            this.btnRun.Location = new System.Drawing.Point(299, 372);
+            this.btnRun.Location = new System.Drawing.Point(299, 439);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(115, 23);
             this.btnRun.TabIndex = 96;
@@ -316,7 +321,7 @@
             // 
             // btnMoveLeft
             // 
-            this.btnMoveLeft.Location = new System.Drawing.Point(137, 269);
+            this.btnMoveLeft.Location = new System.Drawing.Point(137, 319);
             this.btnMoveLeft.Name = "btnMoveLeft";
             this.btnMoveLeft.Size = new System.Drawing.Size(28, 23);
             this.btnMoveLeft.TabIndex = 91;
@@ -326,7 +331,7 @@
             // 
             // btnMoveRight
             // 
-            this.btnMoveRight.Location = new System.Drawing.Point(137, 240);
+            this.btnMoveRight.Location = new System.Drawing.Point(137, 290);
             this.btnMoveRight.Name = "btnMoveRight";
             this.btnMoveRight.Size = new System.Drawing.Size(28, 23);
             this.btnMoveRight.TabIndex = 90;
@@ -340,7 +345,7 @@
             this.lstFields.Location = new System.Drawing.Point(18, 208);
             this.lstFields.Name = "lstFields";
             this.lstFields.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lstFields.Size = new System.Drawing.Size(113, 147);
+            this.lstFields.Size = new System.Drawing.Size(113, 212);
             this.lstFields.TabIndex = 89;
             this.lstFields.DoubleClick += new System.EventHandler(this.lstFields_DoubleClick);
             // 
@@ -367,7 +372,7 @@
             this.lstIndeVar.FormattingEnabled = true;
             this.lstIndeVar.Location = new System.Drawing.Point(167, 206);
             this.lstIndeVar.Name = "lstIndeVar";
-            this.lstIndeVar.Size = new System.Drawing.Size(113, 154);
+            this.lstIndeVar.Size = new System.Drawing.Size(113, 214);
             this.lstIndeVar.TabIndex = 108;
             this.lstIndeVar.SelectedIndexChanged += new System.EventHandler(this.lstIndeVar_SelectedIndexChanged);
             this.lstIndeVar.SelectedValueChanged += new System.EventHandler(this.lstIndeVar_SelectedValueChanged);
@@ -377,18 +382,63 @@
             // 
             this.textBox1.BackColor = System.Drawing.SystemColors.Control;
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Location = new System.Drawing.Point(136, 366);
+            this.textBox1.Location = new System.Drawing.Point(136, 427);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(144, 34);
             this.textBox1.TabIndex = 110;
             this.textBox1.Text = "Checked variables deonote Spatially Varying Coefficeints";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.cboAlternative);
+            this.groupBox1.Controls.Add(this.lblAlternative);
+            this.groupBox1.Controls.Add(this.chkCoeEVs);
+            this.groupBox1.Location = new System.Drawing.Point(300, 158);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(264, 102);
+            this.groupBox1.TabIndex = 135;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Output";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(12, 47);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(145, 13);
+            this.label8.TabIndex = 96;
+            this.label8.Text = "Moran Coefficient Calculation";
+            // 
+            // cboAlternative
+            // 
+            this.cboAlternative.FormattingEnabled = true;
+            this.cboAlternative.Items.AddRange(new object[] {
+            "Greater",
+            "Less",
+            "Two Sided"});
+            this.cboAlternative.Location = new System.Drawing.Point(166, 64);
+            this.cboAlternative.Name = "cboAlternative";
+            this.cboAlternative.Size = new System.Drawing.Size(90, 21);
+            this.cboAlternative.TabIndex = 95;
+            this.cboAlternative.Text = "Greater";
+            // 
+            // lblAlternative
+            // 
+            this.lblAlternative.AutoSize = true;
+            this.lblAlternative.Location = new System.Drawing.Point(47, 68);
+            this.lblAlternative.Name = "lblAlternative";
+            this.lblAlternative.Size = new System.Drawing.Size(115, 13);
+            this.lblAlternative.TabIndex = 94;
+            this.lblAlternative.Text = "Alternative Hypothesis:";
+            // 
             // frmVaryingCoefficients
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(579, 411);
+            this.ClientSize = new System.Drawing.Size(579, 472);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.lstIndeVar);
             this.Controls.Add(this.btnOpenSWM);
@@ -399,7 +449,6 @@
             this.Controls.Add(this.cboFamily);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.grbSave);
-            this.Controls.Add(this.chkCoeEVs);
             this.Controls.Add(this.grbEV);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnRun);
@@ -419,6 +468,8 @@
             this.grbEV.ResumeLayout(false);
             this.grbEV.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudEValue)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -457,5 +508,9 @@
         private System.Windows.Forms.ComboBox cboTargetLayer;
         private System.Windows.Forms.CheckedListBox lstIndeVar;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox cboAlternative;
+        private System.Windows.Forms.Label lblAlternative;
     }
 }

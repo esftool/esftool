@@ -20,3 +20,11 @@ C:\Gits\ESFTool\ESFTool\obj\Debug\ESFTool.Properties.Resources.resources
 C:\Gits\ESFTool\ESFTool\obj\Debug\ESFTool.csproj.GenerateResource.Cache
 C:\Gits\ESFTool\ESFTool\obj\Debug\ESFTool.exe
 C:\Gits\ESFTool\ESFTool\obj\Debug\ESFTool.pdb
+C:\Gits\ESFTool\ESFTool\obj\Debug\ESFTool.frmAboutESFTool.resources
+C:\Gits\ESFTool\ESFTool\obj\Debug\ESFTool.frmESFResult.resources
+C:\Gits\ESFTool\ESFTool\obj\Debug\ESFTool.frmSaveESF.resources
+C:\Gits\ESFTool\ESFTool\obj\Debug\ESFTool.frmMScatterplot.resources
+C:\Gits\ESFTool\ESFTool\obj\Debug\ESFTool.frmMScatterResults.resources
+C:\Gits\ESFTool\ESFTool\obj\Debug\ESFTool.frmAddField.resources
+C:\Gits\ESFTool\ESFTool\obj\Debug\ESFTool.frmDeleteField.resources
+C:\Gits\ESFTool\ESFTool\obj\Debug\ESFTool.frmFieldCalculator.resources

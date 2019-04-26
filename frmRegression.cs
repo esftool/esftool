@@ -102,6 +102,9 @@ namespace ESFTool
 
                 }
 
+                //Add intercept in the listview for independent variables
+                lstIndeVar.Items.Add("Intercept");
+
                 if (chkSave.Checked)
                     UpdateListview(lstSave, m_dt);
             }
@@ -166,50 +169,68 @@ namespace ESFTool
 
         private void btnMoveLeft_Click(object sender, EventArgs e)
         {
-            m_pSnippet.MoveSelectedItemsinListBoxtoOtherListBox(lstFields, lstIndeVar);
+            m_pSnippet.MoveSelectedItemsinListBoxtoOtherListBox(lstIndeVar, lstFields);
         }
 
         private void btnRun_Click(object sender, EventArgs e)
         {
             try
             {
+                frmProgress pfrmProgress = new frmProgress();
+                pfrmProgress.lblStatus.Text = "Collecting Data:";
+                pfrmProgress.pgbProgress.Style = ProgressBarStyle.Marquee;
+                pfrmProgress.Show();
+
+                //REngine pEngine = m_pForm.pEngine;
                 if (cboFieldName.Text == "")
                 {
                     MessageBox.Show("Please select the dependent input variables to be used in the regression model.",
                         "Please choose at least one input variable");
-                    return;
                 }
-                if (lstIndeVar.Items.Count == 0 && chkIntercept.Checked == false)
+                if (lstIndeVar.Items.Count == 0)
                 {
                     MessageBox.Show("Please select independents input variables to be used in the regression model.",
                         "Please choose at least one input variable");
-                    return;
                 }
 
-                frmProgress pfrmProgress = new frmProgress();
-                pfrmProgress.lblStatus.Text = "Pre-Processing:";
-                pfrmProgress.pgbProgress.Style = ProgressBarStyle.Marquee;
-                pfrmProgress.Show();
 
 
                 //Decimal places
                 int intDeciPlaces = 5;
 
-                //Get number of Independent variables            
-                int nIDepen = lstIndeVar.Items.Count;
-                if (chkIntercept.Checked)
-                    nIDepen = 0;
+                //Get number of Independent variables 
+                int nIndevarlistCnt = lstIndeVar.Items.Count;
+                //Indicate an intercept only model (2) or a non-intercept model (1) or not (0)
+                int intInterceptModel = 1;
+                for (int j = 0; j < nIndevarlistCnt; j++)
+                {
+                    if ((string)lstIndeVar.Items[j] == "Intercept")
+                        intInterceptModel = 0;
+                }
+                if (nIndevarlistCnt == 1 && intInterceptModel == 0)
+                    intInterceptModel = 2;
+
+                int nIDepen = 0;
+                if (intInterceptModel == 0)
+                    nIDepen = nIndevarlistCnt - 1;
+                else if (intInterceptModel == 1)
+                    nIDepen = nIndevarlistCnt;
 
                 // Gets the column of the dependent variable
                 String dependentName = (string)cboFieldName.SelectedItem;
-                //sourceTable.AcceptChanges();
-                //DataTable dependent = sourceTable.DefaultView.ToTable(false, dependentName);
 
                 // Gets the columns of the independent variables
                 String[] independentNames = new string[nIDepen];
-                for (int j = 0; j < nIDepen; j++)
+                int intIdices = 0;
+                string strIndependentName = "";
+                for (int j = 0; j < nIndevarlistCnt; j++)
                 {
-                    independentNames[j] = (string)lstIndeVar.Items[j];
+                    strIndependentName = (string)lstIndeVar.Items[j];
+                    if (strIndependentName != "Intercept")
+                    {
+                        independentNames[intIdices] = strIndependentName;
+                        intIdices++;
+                    }
                 }
 
                 int nFeature = m_dt.Rows.Count;
@@ -254,19 +275,24 @@ namespace ESFTool
                 m_pEngine.SetSymbol(dependentName, vecDepen);
                 plotCommmand.Append("lm(" + dependentName + "~");
 
-                if (chkIntercept.Checked == false)
+                if (intInterceptModel == 2)
+                {
+                    plotCommmand.Append("1");
+                }
+                else
                 {
                     for (int j = 0; j < nIDepen; j++)
                     {
-                        //double[] arrVector = arrInDepen.GetColumn<double>(j);
                         NumericVector vecIndepen = m_pEngine.CreateNumericVector(arrInDepen[j]);
                         m_pEngine.SetSymbol(independentNames[j], vecIndepen);
                         plotCommmand.Append(independentNames[j] + "+");
                     }
                     plotCommmand.Remove(plotCommmand.Length - 1, 1);
+
+                    if (intInterceptModel == 1)
+                        plotCommmand.Append("-1");
                 }
-                else
-                    plotCommmand.Append("1");
+
 
                 plotCommmand.Append(")");
                 m_pEngine.Evaluate("sum.lm <- summary(" + plotCommmand + ")");
@@ -315,7 +341,15 @@ namespace ESFTool
                     m_pEngine.Evaluate("sample.n <- length(sample.nb)");
 
                     //Calculate MC
-                    m_pEngine.Evaluate("zmc <- lm.morantest(" + plotCommmand.ToString() + ", listw=sample.listw, zero.policy=TRUE)");
+                    if (cboAlternative.Text == "Greater")
+                        m_pEngine.Evaluate("zmc <- lm.morantest(" + plotCommmand.ToString() + ", listw=sample.listw, alternative = 'greater', zero.policy=TRUE)");
+                    else if (cboAlternative.Text == "Less")
+                        m_pEngine.Evaluate("zmc <- lm.morantest(" + plotCommmand.ToString() + ", listw=sample.listw, alternative = 'less', zero.policy=TRUE)");
+                    else if (cboAlternative.Text == "Two Sided")
+                        m_pEngine.Evaluate("zmc <- lm.morantest(" + plotCommmand.ToString() + ", listw=sample.listw, alternative = 'two.sided', zero.policy=TRUE)");
+                    else
+                        m_pEngine.Evaluate("zmc <- lm.morantest(" + plotCommmand.ToString() + ", listw=sample.listw, alternative = 'greater', zero.policy=TRUE)");
+
                     dblResiMC = m_pEngine.Evaluate("zmc$estimate[1]").AsNumeric().First();
                     dblResiMCpVal = m_pEngine.Evaluate("zmc$p.value").AsNumeric().First();
                 }
@@ -355,13 +389,16 @@ namespace ESFTool
                 tblRegResult.Columns.Add(dColPvT);
 
                 //Store Data Table by R result
-                for (int j = 0; j < nIDepen + 1; j++)
+                int intNCoeff = matCoe.RowCount;
+                for (int j = 0; j < intNCoeff; j++)
                 {
                     DataRow pDataRow = tblRegResult.NewRow();
-                    if (j == 0)
+                    if (j == 0 && intInterceptModel != 1)
                     {
                         pDataRow["Name"] = "(Intercept)";
                     }
+                    else if (intInterceptModel == 1)
+                        pDataRow["Name"] = independentNames[j];
                     else
                     {
                         pDataRow["Name"] = independentNames[j - 1];
@@ -373,6 +410,7 @@ namespace ESFTool
                     tblRegResult.Rows.Add(pDataRow);
                 }
 
+
                 //Assign Datagridview to Data Table
                 pfrmRegResult.dgvResults.DataSource = tblRegResult;
 
@@ -381,7 +419,13 @@ namespace ESFTool
                 if (chkResiAuto.Checked)
                 {
                     strResults = new string[4];
-                    strResults[3] = "MC of residuals: " + dblResiMC.ToString("N3") + ", p-value: " + dblResiMCpVal.ToString("N3");
+                    if (dblResiMCpVal < 0.001)
+                        strResults[3] = "MC of residuals: " + dblResiMC.ToString("N3") + ", p-value < 0.001";
+                    else if (dblResiMCpVal > 0.999)
+                        strResults[3] = "MC of residuals: " + dblResiMC.ToString("N3") + ", p-value > 0.999";
+                    else
+                        strResults[3] = "MC of residuals: " + dblResiMC.ToString("N3") + ", p-value: " + dblResiMCpVal.ToString("N3");
+
                 }
                 else
                     strResults = new string[3];
@@ -390,13 +434,21 @@ namespace ESFTool
                         " on " + vecResiDF[1].ToString() + " degrees of freedom";
                 strResults[1] = "Multiple R-squared: " + dblRsqaure.ToString("N" + intDeciPlaces.ToString()) +
                     ", Adjusted R-squared: " + dblAdjRsqaure.ToString("N" + intDeciPlaces.ToString());
-                if (chkIntercept.Checked)
-                    strResults[2] = "";
-                else
+
+                if (intInterceptModel != 2)
                 {
-                    strResults[2] = "F-Statistic: " + vecF[0].ToString("N" + intDeciPlaces.ToString()) +
-                                        " on " + vecF[1].ToString() + " and " + vecF[2].ToString() + " DF, p-value: " + dblPValueF.ToString("N" + intDeciPlaces.ToString());
+                    if (dblPValueF < 0.001)
+                        strResults[2] = "F-Statistic: " + vecF[0].ToString("N" + intDeciPlaces.ToString()) +
+                   " on " + vecF[1].ToString() + " and " + vecF[2].ToString() + " DF, p-value < 0.001";
+                    else if (dblPValueF > 0.999)
+                        strResults[2] = "F-Statistic: " + vecF[0].ToString("N" + intDeciPlaces.ToString()) +
+                   " on " + vecF[1].ToString() + " and " + vecF[2].ToString() + " DF, p-value > 0.999";
+                    else
+                        strResults[2] = "F-Statistic: " + vecF[0].ToString("N" + intDeciPlaces.ToString()) +
+                   " on " + vecF[1].ToString() + " and " + vecF[2].ToString() + " DF, p-value: " + dblPValueF.ToString("N" + intDeciPlaces.ToString());
                 }
+                else
+                    strResults[2] = "";
                 pfrmRegResult.txtOutput.Lines = strResults;
                 pfrmRegResult.Show();
 
@@ -543,22 +595,5 @@ namespace ESFTool
             }
         }
 
-        private void chkIntercept_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkIntercept.Checked)
-            {
-                lstFields.Enabled = false;
-                lstIndeVar.Enabled = false;
-                btnMoveLeft.Enabled = false;
-                btnMoveRight.Enabled = false;
-            }
-            else
-            {
-                lstFields.Enabled = false;
-                lstIndeVar.Enabled = false;
-                btnMoveLeft.Enabled = false;
-                btnMoveRight.Enabled = false;
-            }
-        }
     }
 }

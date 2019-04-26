@@ -163,16 +163,19 @@ namespace ESFTool
 
         private void trbLambda_MouseUp(object sender, MouseEventArgs e)
         {
-            nudLambda.Value = trbLambda.Value / Convert.ToDecimal(100);
+            nudLambda.Value = trbLambda.Value * 2 / Convert.ToDecimal(100);
         }
 
         private void trbGamma_MouseUp(object sender, MouseEventArgs e)
         {
-            if (trbGamma.Value == -200)
-                trbGamma.Value = -199; //To avoid Error occured by zero value transformation
+            if (trbGamma.Value == -100)
+                trbGamma.Value = -99; //To avoid Error occured by zero value transformation
+            else if (trbGamma.Value == 100)
+                trbGamma.Value = 99; //To avoid Error occured by zero value transformation
 
-            nudGamma.Value = Convert.ToDecimal((Convert.ToDouble(trbGamma.Value) * m_dblIinValue)/ 200);
-            //trbGamma.Value = Convert.ToInt32(Convert.ToDouble(nudGamma.Value * 200) / (m_dblIinValue));
+            //nudGamma.Value = Convert.ToDecimal((Convert.ToDouble(trbGamma.Value) * m_dblIinValue) / 200);
+            nudGamma.Value = nudGamma.Minimum + Convert.ToDecimal((Convert.ToDouble(trbGamma.Value + 100) * (2 * m_dblIinValue)) / 200);
+
         }
 
         private void btnAddPlot_Click(object sender, EventArgs e)
@@ -311,7 +314,34 @@ namespace ESFTool
         private void cboFieldName_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cboFieldName.Text == "" || cboTargetLayer.Text == ""||m_dt==null)
+            {
+                btnLog.Enabled = false;
+                btnTrans.Enabled = false;
+                chkGamma.Enabled = false;
                 return;
+            }
+
+            btnLog.Enabled = true;
+            btnTrans.Enabled = true;
+            chkGamma.Enabled = true;
+
+            nudGamma.Value = 0;
+            nudGamma.Maximum = 0;
+            nudGamma.Minimum = 0;
+            nudLambda.Value = 0;
+
+            btnAddPlot.Enabled = false;
+
+            grbPara.Enabled = false;
+            grbSave.Enabled = false;
+
+            if (chkGamma.Checked)
+            {
+                trbGamma.Enabled = false;
+                nudGamma.Enabled = false;
+                nudGamma.ReadOnly = true;
+            }
+
             m_strFieldName = cboFieldName.Text;
             string strLayerName = cboTargetLayer.Text;
 
@@ -437,44 +467,146 @@ namespace ESFTool
                     nudGamma.ReadOnly = false;
                 }
 
-
-                //string strFieldName = cboFieldName.Text;
-                NumericVector vecValue = m_pEngine.CreateNumericVector(m_arrValue);
-                m_pEngine.SetSymbol("bc.sample", vecValue);
-
-                string strCommand = string.Empty;
-                if (chkGamma.Checked)
-                    strCommand = "bc.par <- boxcoxfit(bc.sample, lambda2 = T)";
-                else
-                    strCommand = "bc.par <- boxcoxfit(bc.sample)";
-
-                m_pEngine.Evaluate(strCommand);
-
-                double[] arrPara = m_pEngine.Evaluate("bc.par$lambda").AsNumeric().ToArray();
-
-
+                //Range Setup
                 if (chkGamma.Checked)
                 {
-                    m_dblIinValue = Math.Abs(m_arrValue.Min()) + 0.00001 * (m_arrValue.Max() - m_arrValue.Min());
 
-                    trbGamma.Enabled = true;
-                    nudGamma.Maximum = Convert.ToDecimal(m_dblIinValue);
-                    nudGamma.Minimum = Convert.ToDecimal((-1) * m_dblIinValue);
+                    double dblMin = m_arrValue.Min();
+                    double dblMax = m_arrValue.Max();
+                    m_dblIinValue = (m_arrValue.Max() - m_arrValue.Min());
 
-                    //trbGamma.Value = Convert.ToInt32(arrPara[1] / m_dblIinValue * 200);
-                    nudGamma.Value = Convert.ToDecimal(arrPara[1]);
-                    nudGamma.Increment = Convert.ToDecimal(m_dblIinValue / Convert.ToDouble(200));
+                    if (dblMin <= 0)
+                    {
+                        nudGamma.Minimum = Convert.ToDecimal(((-1) * dblMin) + 0.001);
+                        nudGamma.Maximum = nudGamma.Minimum + Convert.ToDecimal(m_dblIinValue * 2);
+                    }
+                    else
+                    {
+                        if (dblMin - m_dblIinValue <= 0)
+                        {
+                            nudGamma.Minimum = Convert.ToDecimal(((-1) * dblMin) + 0.001);
+                            nudGamma.Maximum = nudGamma.Minimum + Convert.ToDecimal(m_dblIinValue * 2);
+                        }
+                        else
+                        {
+                            nudGamma.Minimum = Convert.ToDecimal(-1 * (m_dblIinValue));
+                            nudGamma.Maximum = Convert.ToDecimal(m_dblIinValue);
+                        }
+                    }
+                    nudGamma.Increment = Convert.ToDecimal(m_dblIinValue / Convert.ToDouble(100));
 
-                    nudLambda.Value = Convert.ToDecimal(arrPara[0]);
-                    trbLambda.Value = Convert.ToInt32(arrPara[0] * 100); // Value are represented as percentage
                 }
                 else
                 {
                     trbGamma.Enabled = false;
-                    nudLambda.Value = Convert.ToDecimal(arrPara[0]);
-                    trbLambda.Value = Convert.ToInt32(arrPara[0] * 100);
+                    nudGamma.Enabled = false;
                 }
 
+
+                //string strFieldName = cboFieldName.Text;
+                NumericVector vecValue = m_pEngine.CreateNumericVector(m_arrValue);
+                m_pEngine.SetSymbol("bc.sample", vecValue);
+                double[] arrPara = null;
+
+                string strCommand = string.Empty;
+                if (chkGamma.Checked)
+                {
+                    try
+                    {
+                        strCommand = "bc.par <- boxcoxfit(bc.sample, lambda2 = T)";
+                        m_pEngine.Evaluate(strCommand);
+                        arrPara = m_pEngine.Evaluate("bc.par$lambda").AsNumeric().ToArray();
+                    }
+                    catch //Add an additinal search function to cover the limitation of boxcoxfit R function. 1.0.6 Addtional Update.
+                    {
+                        DialogResult dialogResult = MessageBox.Show("Fail to find optimal parameters in the boxcoxfit function. Do you want to find optimal parameters further?", "Further Search", MessageBoxButtons.YesNo);
+                        if (dialogResult == DialogResult.Yes)
+                        {
+                            frmProgress pfrmProgress = new frmProgress();
+                            pfrmProgress.lblStatus.Text = "Finding parameters:";
+                            pfrmProgress.pgbProgress.Style = ProgressBarStyle.Marquee;
+                            pfrmProgress.Show();
+
+                            double dblMinLambda = Convert.ToDouble(nudLambda.Minimum);
+                            double dblMaxLambda = Convert.ToDouble(nudLambda.Maximum);
+                            double dblMinGamma = Convert.ToDouble(nudGamma.Minimum);
+                            double dblMaxGamma = Convert.ToDouble(nudGamma.Maximum);
+
+                            for (int k = 0; k < 20; k++)
+                            {
+                                double[] arrTmpPara = new double[2];
+                                double dblTestP2 = Convert.ToDouble(nudGamma.Minimum + nudGamma.Increment * (k * 5));
+
+                                double dblminLL = 0;
+                                double dblLL = 0;
+                                try
+                                {
+                                    strCommand = "bc.par <- boxcoxfit(bc.sample, lambda2 = " + dblTestP2.ToString() + ")";
+                                    m_pEngine.Evaluate(strCommand);
+                                    dblLL = m_pEngine.Evaluate("bc.par$loglik").AsNumeric().First();
+                                    arrTmpPara = m_pEngine.Evaluate("bc.par$lambda").AsNumeric().ToArray();
+                                    if (dblLL < dblminLL && arrTmpPara[0] > dblMinLambda && arrTmpPara[0] < dblMaxLambda && arrTmpPara[1] > dblMinGamma && arrTmpPara[1] < dblMaxGamma)
+                                    {
+                                        dblminLL = dblLL;
+                                        arrPara = arrTmpPara;
+                                    }
+                                }
+                                catch
+                                {
+                                }
+                            }
+
+                            if (arrPara == null)
+                                MessageBox.Show("Fail to find optimal parameters.", "Fail", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                            pfrmProgress.Close();
+                        }
+                        else if (dialogResult == DialogResult.No)
+                        {
+                            return;
+                        }
+
+                    }
+
+                }
+                else
+                {
+                    strCommand = "bc.par <- boxcoxfit(bc.sample)";
+                    m_pEngine.Evaluate(strCommand);
+                    arrPara = m_pEngine.Evaluate("bc.par$lambda").AsNumeric().ToArray();
+                }
+
+                //Assign manual value to avoid error.
+                if (arrPara[0] < -2)
+                {
+                    arrPara[0] = -2;
+                    MessageBox.Show("Fail to find an optimal lambda value. The value is below than -2.");
+                }
+                else if (arrPara[0] > 2)
+                {
+                    arrPara[0] = 2;
+                    MessageBox.Show("Fail to find an optimal lambda value. The value is above than 2.");
+                }
+
+
+                //Values set up
+                if (chkGamma.Checked)
+                {
+
+                    double dblnumGammaMin = Convert.ToDouble(nudGamma.Minimum);
+                    trbGamma.Value = Convert.ToInt32((arrPara[1] - dblnumGammaMin) / (2 * m_dblIinValue) * 200) - 100;
+                    nudGamma.Value = Convert.ToDecimal(arrPara[1]);
+
+                    nudLambda.Value = Convert.ToDecimal(arrPara[0]);
+                    trbLambda.Value = Convert.ToInt32(arrPara[0] / 2 * 100); // Value are represented as percentage
+                }
+                else
+                {
+                    nudLambda.Value = Convert.ToDecimal(arrPara[0]);
+                    trbLambda.Value = Convert.ToInt32(arrPara[0] / 2 * 100);
+                }
+
+                //Drawing plots
                 if (chkGamma.Checked)
                 {
                     m_arrTrValue = BoxCoxTransformation(m_arrValue, arrPara[0], arrPara[1]);
@@ -495,6 +627,7 @@ namespace ESFTool
                 double dblProbSW = m_pEngine.Evaluate("shapiro.test(bc.result)$statistic").AsNumeric().First();
                 txtSW.Text = Math.Round(dblProbSW, 5).ToString();
                 m_blnTransformed = true;
+
             }
             catch (Exception ex)
             {
@@ -505,16 +638,37 @@ namespace ESFTool
 
         private void nudLambda_ValueChanged(object sender, EventArgs e)
         {
-            trbLambda.Value = Convert.ToInt32(nudLambda.Value * 100);
-            RedrawHist();
-            RedrawQQPlot();
+            try
+            {
+                trbLambda.Value = Convert.ToInt32(nudLambda.Value / 2 * 100);
+
+                RedrawHist();
+                RedrawQQPlot();
+            }
+            catch (Exception ex)
+            {
+                frmErrorLog pfrmErrorLog = new frmErrorLog(); pfrmErrorLog.ex = ex; pfrmErrorLog.ShowDialog();
+                return;
+            }
         }
 
         private void nudGamma_ValueChanged(object sender, EventArgs e)
         {
-            trbGamma.Value = Convert.ToInt32(Convert.ToDouble(nudGamma.Value * 200) / (m_dblIinValue));
-            RedrawHist();
-            RedrawQQPlot();
+            try
+            {
+                //trbGamma.Value = Convert.ToInt32((arrPara[1] - dblnumGammaMin) / m_dblIinValue * 200) - 100;
+                //nudGamma.Value = nudGamma.Minimum + Convert.ToDecimal((Convert.ToDouble(trbGamma.Value + 100) * m_dblIinValue) / 200);
+
+                trbGamma.Value = Convert.ToInt32(Convert.ToDouble(nudGamma.Value - nudGamma.Minimum) / (2 * m_dblIinValue) * 200) - 100;
+                //trbGamma.Value = Convert.ToInt32(Convert.ToDouble(nudGamma.Value * 200) / (m_dblIinValue));
+                RedrawHist();
+                RedrawQQPlot();
+            }
+            catch (Exception ex)
+            {
+                frmErrorLog pfrmErrorLog = new frmErrorLog(); pfrmErrorLog.ex = ex; pfrmErrorLog.ShowDialog();
+                return;
+            }
         }
 
         #region Private Functions
@@ -878,7 +1032,113 @@ namespace ESFTool
             return dblLogSum;
         }
 
+        private void btnLog_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cboFieldName.Text == "" || cboTargetLayer.Text == "")
+                    return;
+                if (m_arrValue == null)
+                    return;
 
+                btnAddPlot.Enabled = true;
+
+                grbPara.Enabled = true;
+                grbSave.Enabled = true;
+
+                if (chkGamma.Checked)
+                {
+                    trbGamma.Enabled = true;
+                    nudGamma.Enabled = true;
+                    nudGamma.ReadOnly = false;
+                }
+
+
+                //string strFieldName = cboFieldName.Text;
+                NumericVector vecValue = m_pEngine.CreateNumericVector(m_arrValue);
+                m_pEngine.SetSymbol("bc.sample", vecValue);
+
+                string strCommand = string.Empty;
+                if (chkGamma.Checked)
+                    strCommand = "bc.par <- boxcoxfit(bc.sample, lambda2 = T)";
+                else
+                    strCommand = "bc.par <- boxcoxfit(bc.sample)";
+
+                m_pEngine.Evaluate(strCommand);
+
+                double[] arrPara = m_pEngine.Evaluate("bc.par$lambda").AsNumeric().ToArray();
+
+
+                if (chkGamma.Checked)
+                {
+                    //trbGamma.Enabled = true;
+
+
+                    double dblMin = m_arrValue.Min();
+                    double dblMax = m_arrValue.Max();
+                    m_dblIinValue = (m_arrValue.Max() - m_arrValue.Min());
+
+                    if (dblMin <= 0)
+                    {
+                        nudGamma.Minimum = Convert.ToDecimal(((-1) * dblMin) + 0.001);
+                        nudGamma.Maximum = nudGamma.Minimum + Convert.ToDecimal(m_dblIinValue * 2);
+                    }
+                    else
+                    {
+                        if (dblMin - m_dblIinValue <= 0)
+                        {
+                            nudGamma.Minimum = Convert.ToDecimal(((-1) * dblMin) + 0.001);
+                            nudGamma.Maximum = nudGamma.Minimum + Convert.ToDecimal(m_dblIinValue * 2);
+                        }
+                        else
+                        {
+                            nudGamma.Minimum = Convert.ToDecimal(-1 * (m_dblIinValue));
+                            nudGamma.Maximum = Convert.ToDecimal(m_dblIinValue);
+                        }
+                    }
+
+                    double dblnumGammaMin = Convert.ToDouble(nudGamma.Minimum);
+                    trbGamma.Value = Convert.ToInt32((arrPara[1] - dblnumGammaMin) / (2 * m_dblIinValue) * 200) - 100;
+                    nudGamma.Value = Convert.ToDecimal(arrPara[1]);
+                    nudGamma.Increment = Convert.ToDecimal(m_dblIinValue / Convert.ToDouble(100));
+
+                    nudLambda.Value = 0;
+                    trbLambda.Value = Convert.ToInt32(arrPara[0] / 2 * 100); // Value are represented as percentage
+                }
+                else
+                {
+                    trbGamma.Enabled = false;
+                    nudLambda.Value = 0;
+                    trbLambda.Value = Convert.ToInt32(arrPara[0] / 2 * 100);
+                }
+
+                if (chkGamma.Checked)
+                {
+                    m_arrTrValue = BoxCoxTransformation(m_arrValue, 0, arrPara[1]);
+                    DrawHist(m_arrTrValue, "transformed", 0, arrPara[1]);
+                    DrawQQPlot(m_arrTrValue, "transformed", 0, arrPara[1]);
+                }
+                else
+                {
+                    m_arrTrValue = BoxCoxTransformation(m_arrValue, 0, 0);
+                    DrawHist(m_arrTrValue, "transformed", 0, 0);
+                    DrawQQPlot(m_arrTrValue, "transformed", 0, 0);
+                }
+
+                //Update SW
+                NumericVector vecTrValue = m_pEngine.CreateNumericVector(m_arrTrValue);
+                m_pEngine.SetSymbol("bc.result", vecTrValue);
+
+                double dblProbSW = m_pEngine.Evaluate("shapiro.test(bc.result)$statistic").AsNumeric().First();
+                txtSW.Text = Math.Round(dblProbSW, 5).ToString();
+                m_blnTransformed = true;
+            }
+            catch (Exception ex)
+            {
+                frmErrorLog pfrmErrorLog = new frmErrorLog(); pfrmErrorLog.ex = ex; pfrmErrorLog.ShowDialog();
+                return;
+            }
+        }
 
         private double CalLoglik(double[] arrTrValue, double dblLambda)
         {

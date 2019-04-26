@@ -63,6 +63,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.pHistogram = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.pQQPlot = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.btnLog = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudGamma)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLambda)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -79,7 +80,7 @@
             // exportToImageFileToolStripMenuItem
             // 
             this.exportToImageFileToolStripMenuItem.Name = "exportToImageFileToolStripMenuItem";
-            this.exportToImageFileToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.exportToImageFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportToImageFileToolStripMenuItem.Text = "Export to image file";
             // 
             // chkGamma
@@ -94,7 +95,7 @@
             // 
             // btnTrans
             // 
-            this.btnTrans.Location = new System.Drawing.Point(6, 120);
+            this.btnTrans.Location = new System.Drawing.Point(8, 120);
             this.btnTrans.Name = "btnTrans";
             this.btnTrans.Size = new System.Drawing.Size(148, 23);
             this.btnTrans.TabIndex = 32;
@@ -214,7 +215,7 @@
             // btnAddPlot
             // 
             this.btnAddPlot.Enabled = false;
-            this.btnAddPlot.Location = new System.Drawing.Point(7, 145);
+            this.btnAddPlot.Location = new System.Drawing.Point(8, 170);
             this.btnAddPlot.Name = "btnAddPlot";
             this.btnAddPlot.Size = new System.Drawing.Size(148, 23);
             this.btnAddPlot.TabIndex = 34;
@@ -224,6 +225,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnLog);
             this.groupBox1.Controls.Add(this.btnAddPlot);
             this.groupBox1.Controls.Add(this.chkGamma);
             this.groupBox1.Controls.Add(this.btnTrans);
@@ -233,7 +235,7 @@
             this.groupBox1.Controls.Add(this.cboTargetLayer);
             this.groupBox1.Location = new System.Drawing.Point(12, 9);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(166, 174);
+            this.groupBox1.Size = new System.Drawing.Size(166, 203);
             this.groupBox1.TabIndex = 28;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Input";
@@ -241,8 +243,8 @@
             // trbLambda
             // 
             this.trbLambda.Location = new System.Drawing.Point(12, 42);
-            this.trbLambda.Maximum = 200;
-            this.trbLambda.Minimum = -200;
+            this.trbLambda.Maximum = 100;
+            this.trbLambda.Minimum = -100;
             this.trbLambda.Name = "trbLambda";
             this.trbLambda.Size = new System.Drawing.Size(142, 45);
             this.trbLambda.TabIndex = 2;
@@ -264,7 +266,7 @@
             this.conMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exportToImageFileToolStripMenuItem});
             this.conMenu.Name = "conMenu";
-            this.conMenu.Size = new System.Drawing.Size(177, 26);
+            this.conMenu.Size = new System.Drawing.Size(181, 26);
             // 
             // grbPara
             // 
@@ -277,7 +279,7 @@
             this.grbPara.Controls.Add(this.label3);
             this.grbPara.Controls.Add(this.trbGamma);
             this.grbPara.Enabled = false;
-            this.grbPara.Location = new System.Drawing.Point(12, 190);
+            this.grbPara.Location = new System.Drawing.Point(12, 218);
             this.grbPara.Name = "grbPara";
             this.grbPara.Size = new System.Drawing.Size(161, 178);
             this.grbPara.TabIndex = 29;
@@ -288,8 +290,8 @@
             // 
             this.trbGamma.Enabled = false;
             this.trbGamma.Location = new System.Drawing.Point(12, 100);
-            this.trbGamma.Maximum = 200;
-            this.trbGamma.Minimum = -200;
+            this.trbGamma.Maximum = 100;
+            this.trbGamma.Minimum = -100;
             this.trbGamma.Name = "trbGamma";
             this.trbGamma.Size = new System.Drawing.Size(142, 45);
             this.trbGamma.TabIndex = 6;
@@ -340,7 +342,7 @@
             this.grbSave.Controls.Add(this.txtSaveResult);
             this.grbSave.Controls.Add(this.btnSave);
             this.grbSave.Enabled = false;
-            this.grbSave.Location = new System.Drawing.Point(12, 374);
+            this.grbSave.Location = new System.Drawing.Point(12, 402);
             this.grbSave.Name = "grbSave";
             this.grbSave.Size = new System.Drawing.Size(161, 83);
             this.grbSave.TabIndex = 34;
@@ -355,7 +357,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(189, 460);
+            this.panel1.Size = new System.Drawing.Size(189, 493);
             this.panel1.TabIndex = 3;
             // 
             // pHistogram
@@ -393,7 +395,7 @@
             series1.MarkerBorderColor = System.Drawing.Color.White;
             series1.Name = "Series1";
             this.pHistogram.Series.Add(series1);
-            this.pHistogram.Size = new System.Drawing.Size(348, 460);
+            this.pHistogram.Size = new System.Drawing.Size(348, 493);
             this.pHistogram.TabIndex = 5;
             this.pHistogram.Text = "chart1";
             // 
@@ -433,16 +435,27 @@
             series2.MarkerBorderColor = System.Drawing.Color.White;
             series2.Name = "Series1";
             this.pQQPlot.Series.Add(series2);
-            this.pQQPlot.Size = new System.Drawing.Size(367, 460);
+            this.pQQPlot.Size = new System.Drawing.Size(367, 493);
             this.pQQPlot.TabIndex = 6;
             this.pQQPlot.Text = "chart1";
+            // 
+            // btnLog
+            // 
+            this.btnLog.Enabled = false;
+            this.btnLog.Location = new System.Drawing.Point(8, 145);
+            this.btnLog.Name = "btnLog";
+            this.btnLog.Size = new System.Drawing.Size(148, 23);
+            this.btnLog.TabIndex = 36;
+            this.btnLog.Text = "Log Transformation";
+            this.btnLog.UseVisualStyleBackColor = true;
+            this.btnLog.Click += new System.EventHandler(this.btnLog_Click);
             // 
             // frmBoxCox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(904, 460);
+            this.ClientSize = new System.Drawing.Size(904, 493);
             this.Controls.Add(this.pQQPlot);
             this.Controls.Add(this.pHistogram);
             this.Controls.Add(this.panel1);
@@ -498,5 +511,6 @@
         private System.Windows.Forms.Panel panel1;
         public System.Windows.Forms.DataVisualization.Charting.Chart pHistogram;
         public System.Windows.Forms.DataVisualization.Charting.Chart pQQPlot;
+        private System.Windows.Forms.Button btnLog;
     }
 }

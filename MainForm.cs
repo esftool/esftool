@@ -12,6 +12,7 @@ using System.ComponentModel.Composition;
 using RDotNet;
 using RDotNet.NativeLibrary;
 using DotSpatial.Controls;
+using System.Drawing.Imaging;
 
 namespace ESFTool
 {
@@ -297,6 +298,36 @@ namespace ESFTool
         {
             frmVaryingCoefficients frmSPC = new frmVaryingCoefficients();
             frmSPC.Show();
+        }
+
+        private void aboutTheToolToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmAboutESFTool pfrmAboutESFtool = new frmAboutESFTool();
+            pfrmAboutESFtool.ShowDialog();
+        }
+
+        private void moranScatterPlotToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmMScatterplot pfrmMscatterplot = new frmMScatterplot();
+            pfrmMscatterplot.Show();
+        }
+
+        private void addFieldToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmAddField pfrmAddfield = new frmAddField();
+            pfrmAddfield.Show();
+        }
+
+        private void deleteFieldToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmDeleteField pfrmDeleteFiled = new frmDeleteField();
+            pfrmDeleteFiled.Show();
+        }
+
+        private void fieldCalculatorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmFieldCalculator pfrmFieldCalculator = new frmFieldCalculator();
+            pfrmFieldCalculator.Show();
         }
     }
 }

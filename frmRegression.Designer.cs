@@ -55,20 +55,24 @@
             this.lstIndeVar = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cboTargetLayer = new System.Windows.Forms.ComboBox();
-            this.chkIntercept = new System.Windows.Forms.CheckBox();
+            this.cboAlternative = new System.Windows.Forms.ComboBox();
+            this.lblAlternative = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.grbSave.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cboAlternative);
+            this.groupBox1.Controls.Add(this.lblAlternative);
+            this.groupBox1.Controls.Add(this.chkPlots);
             this.groupBox1.Controls.Add(this.chkResiAuto);
             this.groupBox1.Controls.Add(this.btnOpenSWM);
             this.groupBox1.Controls.Add(this.txtSWM);
             this.groupBox1.Controls.Add(this.lblSWM);
-            this.groupBox1.Location = new System.Drawing.Point(305, 17);
+            this.groupBox1.Location = new System.Drawing.Point(296, 17);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(261, 90);
+            this.groupBox1.Size = new System.Drawing.Size(261, 141);
             this.groupBox1.TabIndex = 105;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Residual analysis";
@@ -88,7 +92,7 @@
             // 
             // btnOpenSWM
             // 
-            this.btnOpenSWM.Location = new System.Drawing.Point(191, 58);
+            this.btnOpenSWM.Location = new System.Drawing.Point(216, 60);
             this.btnOpenSWM.Name = "btnOpenSWM";
             this.btnOpenSWM.Size = new System.Drawing.Size(29, 23);
             this.btnOpenSWM.TabIndex = 89;
@@ -98,7 +102,7 @@
             // 
             // txtSWM
             // 
-            this.txtSWM.Location = new System.Drawing.Point(12, 60);
+            this.txtSWM.Location = new System.Drawing.Point(37, 62);
             this.txtSWM.Name = "txtSWM";
             this.txtSWM.Size = new System.Drawing.Size(166, 20);
             this.txtSWM.TabIndex = 88;
@@ -107,11 +111,11 @@
             // lblSWM
             // 
             this.lblSWM.AutoSize = true;
-            this.lblSWM.Location = new System.Drawing.Point(12, 44);
+            this.lblSWM.Location = new System.Drawing.Point(37, 44);
             this.lblSWM.Name = "lblSWM";
-            this.lblSWM.Size = new System.Drawing.Size(107, 13);
+            this.lblSWM.Size = new System.Drawing.Size(112, 13);
             this.lblSWM.TabIndex = 87;
-            this.lblSWM.Text = "Spatial Weight Matrix";
+            this.lblSWM.Text = "Spatial Weights Matrix";
             // 
             // chkSave
             // 
@@ -155,7 +159,7 @@
             // 
             this.grbSave.Controls.Add(this.lstSave);
             this.grbSave.Controls.Add(this.chkSave);
-            this.grbSave.Location = new System.Drawing.Point(305, 140);
+            this.grbSave.Location = new System.Drawing.Point(296, 167);
             this.grbSave.Name = "grbSave";
             this.grbSave.Size = new System.Drawing.Size(264, 111);
             this.grbSave.TabIndex = 104;
@@ -165,7 +169,7 @@
             // chkPlots
             // 
             this.chkPlots.AutoSize = true;
-            this.chkPlots.Location = new System.Drawing.Point(317, 117);
+            this.chkPlots.Location = new System.Drawing.Point(12, 116);
             this.chkPlots.Name = "chkPlots";
             this.chkPlots.Size = new System.Drawing.Size(137, 17);
             this.chkPlots.TabIndex = 103;
@@ -174,7 +178,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(452, 259);
+            this.btnCancel.Location = new System.Drawing.Point(443, 290);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(115, 23);
             this.btnCancel.TabIndex = 102;
@@ -184,7 +188,7 @@
             // 
             // btnRun
             // 
-            this.btnRun.Location = new System.Drawing.Point(306, 259);
+            this.btnRun.Location = new System.Drawing.Point(297, 290);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(115, 23);
             this.btnRun.TabIndex = 101;
@@ -195,7 +199,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(168, 103);
+            this.label4.Location = new System.Drawing.Point(162, 103);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(113, 13);
             this.label4.TabIndex = 100;
@@ -204,7 +208,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(22, 103);
+            this.label3.Location = new System.Drawing.Point(16, 103);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(34, 13);
             this.label3.TabIndex = 99;
@@ -213,7 +217,7 @@
             // cboFieldName
             // 
             this.cboFieldName.FormattingEnabled = true;
-            this.cboFieldName.Location = new System.Drawing.Point(18, 65);
+            this.cboFieldName.Location = new System.Drawing.Point(12, 65);
             this.cboFieldName.Name = "cboFieldName";
             this.cboFieldName.Size = new System.Drawing.Size(265, 21);
             this.cboFieldName.TabIndex = 98;
@@ -221,7 +225,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(19, 49);
+            this.label2.Location = new System.Drawing.Point(13, 49);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(104, 13);
             this.label2.TabIndex = 97;
@@ -229,7 +233,7 @@
             // 
             // btnMoveLeft
             // 
-            this.btnMoveLeft.Location = new System.Drawing.Point(137, 164);
+            this.btnMoveLeft.Location = new System.Drawing.Point(131, 164);
             this.btnMoveLeft.Name = "btnMoveLeft";
             this.btnMoveLeft.Size = new System.Drawing.Size(28, 23);
             this.btnMoveLeft.TabIndex = 96;
@@ -239,7 +243,7 @@
             // 
             // btnMoveRight
             // 
-            this.btnMoveRight.Location = new System.Drawing.Point(137, 135);
+            this.btnMoveRight.Location = new System.Drawing.Point(131, 135);
             this.btnMoveRight.Name = "btnMoveRight";
             this.btnMoveRight.Size = new System.Drawing.Size(28, 23);
             this.btnMoveRight.TabIndex = 95;
@@ -250,27 +254,27 @@
             // lstFields
             // 
             this.lstFields.FormattingEnabled = true;
-            this.lstFields.Location = new System.Drawing.Point(18, 122);
+            this.lstFields.Location = new System.Drawing.Point(12, 122);
             this.lstFields.Name = "lstFields";
             this.lstFields.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lstFields.Size = new System.Drawing.Size(113, 134);
+            this.lstFields.Size = new System.Drawing.Size(113, 186);
             this.lstFields.TabIndex = 94;
             this.lstFields.DoubleClick += new System.EventHandler(this.lstFields_DoubleClick);
             // 
             // lstIndeVar
             // 
             this.lstIndeVar.FormattingEnabled = true;
-            this.lstIndeVar.Location = new System.Drawing.Point(171, 122);
+            this.lstIndeVar.Location = new System.Drawing.Point(165, 122);
             this.lstIndeVar.Name = "lstIndeVar";
             this.lstIndeVar.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lstIndeVar.Size = new System.Drawing.Size(113, 134);
+            this.lstIndeVar.Size = new System.Drawing.Size(113, 186);
             this.lstIndeVar.TabIndex = 93;
             this.lstIndeVar.DoubleClick += new System.EventHandler(this.lstIndeVar_DoubleClick);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 9);
+            this.label1.Location = new System.Drawing.Point(13, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(112, 13);
             this.label1.TabIndex = 92;
@@ -279,33 +283,42 @@
             // cboTargetLayer
             // 
             this.cboTargetLayer.FormattingEnabled = true;
-            this.cboTargetLayer.Location = new System.Drawing.Point(18, 25);
+            this.cboTargetLayer.Location = new System.Drawing.Point(12, 25);
             this.cboTargetLayer.Name = "cboTargetLayer";
             this.cboTargetLayer.Size = new System.Drawing.Size(266, 21);
             this.cboTargetLayer.TabIndex = 91;
             this.cboTargetLayer.SelectedIndexChanged += new System.EventHandler(this.cboTargetLayer_SelectedIndexChanged);
             // 
-            // chkIntercept
+            // cboAlternative
             // 
-            this.chkIntercept.AutoSize = true;
-            this.chkIntercept.Location = new System.Drawing.Point(19, 262);
-            this.chkIntercept.Name = "chkIntercept";
-            this.chkIntercept.Size = new System.Drawing.Size(182, 17);
-            this.chkIntercept.TabIndex = 111;
-            this.chkIntercept.Text = "Regression with an intercept only";
-            this.chkIntercept.UseVisualStyleBackColor = true;
-            this.chkIntercept.CheckedChanged += new System.EventHandler(this.chkIntercept_CheckedChanged);
+            this.cboAlternative.FormattingEnabled = true;
+            this.cboAlternative.Items.AddRange(new object[] {
+            "Greater",
+            "Less",
+            "Two Sided"});
+            this.cboAlternative.Location = new System.Drawing.Point(159, 89);
+            this.cboAlternative.Name = "cboAlternative";
+            this.cboAlternative.Size = new System.Drawing.Size(90, 21);
+            this.cboAlternative.TabIndex = 94;
+            this.cboAlternative.Text = "Greater";
+            // 
+            // lblAlternative
+            // 
+            this.lblAlternative.AutoSize = true;
+            this.lblAlternative.Location = new System.Drawing.Point(40, 93);
+            this.lblAlternative.Name = "lblAlternative";
+            this.lblAlternative.Size = new System.Drawing.Size(115, 13);
+            this.lblAlternative.TabIndex = 93;
+            this.lblAlternative.Text = "Alternative Hypothesis:";
             // 
             // frmRegression
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(613, 293);
-            this.Controls.Add(this.chkIntercept);
+            this.ClientSize = new System.Drawing.Size(575, 326);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.grbSave);
-            this.Controls.Add(this.chkPlots);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnRun);
             this.Controls.Add(this.label4);
@@ -357,6 +370,7 @@
         private System.Windows.Forms.ListBox lstIndeVar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cboTargetLayer;
-        private System.Windows.Forms.CheckBox chkIntercept;
+        private System.Windows.Forms.ComboBox cboAlternative;
+        private System.Windows.Forms.Label lblAlternative;
     }
 }
