@@ -1,0 +1,12 @@
+Update Note (v1.0.4) (05/8/2019)
+
+
+
+Regression - Varying Coefficient
+
+: Major update for spatially varying coefficients of the selected variable. 
+
+Regression - Generalized Linear Models
+
+: Minor bug fixing to represent R squared 
+
