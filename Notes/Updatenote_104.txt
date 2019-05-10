@@ -1,12 +1,18 @@
-Update Note (v1.0.4) (05/8/2019)
+Update Note (v1.0.4) (05/10/2019)
 
 
 
 Regression - Varying Coefficient
 
-: Major update for spatially varying coefficients of the selected variable. 
+: Major bug fixing for spatially varying coefficient calculation of the selected variable. 
+: Revising eigenvector selection method (using the stepAIC function in R with a scope definition and both (forward and backward) selection)
+
+Regression - ESF
+
+: Revising eigenvector selection method (using the stepAIC function in R with a scope definition and both (forward and backward) selection)
 
 Regression - Generalized Linear Models
 
 : Minor bug fixing to represent R squared 
+
 
