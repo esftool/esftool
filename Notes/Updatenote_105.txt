@@ -1,0 +1,10 @@
+Update Note (v1.0.5) (02/27/2020)
+
+Spatial Weights:
+: Apply coding schemes for a spatial weights matrix (e.g., row-standardized, binary, globally-standardized, Variance-stabilizing)  
+
+Data - Data Transformation
+: Update the minimum value of gamma as Double.Epsilon
+
+Regression: 
+: Update error meassages for poisson and NB regressions.
